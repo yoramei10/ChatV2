@@ -38,9 +38,6 @@ public class RestControllerApp {
     @Autowired
     private IMapAppMessageToMessagingAppMessage mapAppMessageToMessagingAppMessage;
 
-//    @Value("${spring.kafka.producer.key-serializer}")
-//    private String key_serializer;
-
     List<ChatUser> allUsers = new ArrayList<>();
     static final String BASEAPI = "/chatApp";
 
