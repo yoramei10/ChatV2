@@ -2,7 +2,13 @@ url:
   baseUrl: /chatApp
 spring:
   kafka:
+    topic: ChatTopic
     producer:
       bootstrap-servers: localhost:9092
       keySerializer: 'org.apache.kafka.common.serialization.StringSerializer'
-#      valueSerializer: 'org.apache.kafka.common.serialization.JsonSerializer'
+      valueSerializerr: 'org.apache.kafka.common.serialization.JsonSerializer'
+appMessage:
+  messageContext:
+    addNewUser: "added new user "
+    removeUser: "remove user "
+
