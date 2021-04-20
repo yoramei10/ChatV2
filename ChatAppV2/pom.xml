@@ -59,14 +59,15 @@
 			</plugin>
 		</plugins>
 
-<!--		<resources>-->
-<!--			<resource>-->
-<!--				<directory>resources</directory>-->
-<!--				<includes>-->
-<!--					<include>application.yaml</include>-->
-<!--				</includes>-->
-<!--			</resource>-->
-<!--		</resources>-->
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>application.properties</include>
+					<include>application.yaml</include>
+				</includes>
+			</resource>
+		</resources>
 	</build>
 
 </project>

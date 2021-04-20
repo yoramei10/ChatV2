@@ -5,9 +5,7 @@ import com.sherut.mappers.interfaces.IMapAppMessageToMessagingAppMessage;
 import com.sherut.mappers.interfaces.IMapChatUserToChatUserDM;
 import com.sherut.models.ResourceModels.AppMessage;
 import com.sherut.models.ResourceModels.ChatUser;
-import com.sherut.models.DModels.interfaces.IChatUserDM;
 import com.sherut.services.applicationServices.interfaces.*;
-import com.sherut.models.ResourceModels.MessageAppMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -38,8 +36,14 @@ public class RestControllerApp {
     @Autowired
     private IMapAppMessageToMessagingAppMessage mapAppMessageToMessagingAppMessage;
 
+    @Value("${url.baseUrl}")
+    String BASEAPI1;
+//    final String  BASEAPI = BASEAPI1;
+    final String BASEAPI = "/chatApp";
+
+    //TODO: implement it in database
     List<ChatUser> allUsers = new ArrayList<>();
-    static final String BASEAPI = "/chatApp";
+
 
     @RequestMapping(value = BASEAPI + "/login",
             produces = "application/json",
@@ -53,18 +57,14 @@ public class RestControllerApp {
             return new ResponseEntity<ChatUser>(user, HttpStatus.OK);
     }
 
-    @RequestMapping(value = BASEAPI +"/removeUser",
+    @RequestMapping(value = BASEAPI + "/removeUser",
             produces = "application/json",
             method = RequestMethod.DELETE)
     public ResponseEntity<String> removeUser(@RequestParam(value = "id") @PathVariable("id") String id) {
 
         ChatUser userToRemove = removeUserApplicationService.removeUser(allUsers, id);
 
-        if (null != userToRemove) {
-            return new ResponseEntity<String>(String.format("user %s was removed", userToRemove.getName()), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<String>(String.format("user %s was not found", id), HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<String>(String.format("user %s was removed", userToRemove.getName()), HttpStatus.OK);
     }
 
     @RequestMapping(value = BASEAPI + "/getAllNickNames",

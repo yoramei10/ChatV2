@@ -35,9 +35,19 @@ public class ServiceDomainBeanConfig {
         return new ValidateUserInputServiceService();
     }
 
-    @Bean
-    public IPublishNewUserService publishNewUserService(){
+    @Bean("publishNewUserService")
+    public IPublishUserService publishNewUserService(){
         return new PublishNewUserService();
+    }
+
+    @Bean("publishRemoveUserService")
+    public IPublishUserService publishRemoveUserService(){
+        return new PublishRemoveUserService();
+    }
+
+    @Bean
+    public IBuildAppMessageService buildAppMessageService(){
+        return new BuildAppMessageService();
     }
 
     @Bean
