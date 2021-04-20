@@ -17,16 +17,20 @@ import java.util.Map;
 @Configuration
 public class KafkaConfig {
 
-//    @Value("${spring.kafka.producer.bootstrap-servers}")
-//    private String bootstrapServers;
+    @Value("${spring.kafka.producer.bootstrap-servers}")
+    private String bootstrapServers;
+//    @Value("${spring.kafka.producer.keySerializer}")
+//    private String keySerializer;
+//    @Value("${spring.kafka.producer.valueSerializer}")
+//    private String valueSerializer;
 
     @Bean
     public ProducerFactory<String, AppMessage> producerFactory(){
 
         Map<String, Object> configMap = new HashMap<>();
-//        configMap.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        configMap.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        configMap.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        configMap.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+//        configMap.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        configMap.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         configMap.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         return new DefaultKafkaProducerFactory(configMap);
     }
