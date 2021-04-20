@@ -2,7 +2,7 @@ package com.sherut.services.domainServices.interfaces;
 
 import com.sherut.models.ResourceModels.ChatUser;
 
-public interface IPublishNewUserService {
+public interface IPublishUserService {
 
-    void publish (ChatUser newUser);
+    void publish (ChatUser user);
 }

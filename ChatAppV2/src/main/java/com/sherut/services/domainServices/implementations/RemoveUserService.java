@@ -3,11 +3,18 @@ package com.sherut.services.domainServices.implementations;
 
 import com.sherut.exceptions.BadRequestException;
 import com.sherut.models.ResourceModels.ChatUser;
+import com.sherut.services.domainServices.interfaces.IPublishUserService;
 import com.sherut.services.domainServices.interfaces.IRemoveUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.List;
 
 public class RemoveUserService implements IRemoveUserService {
+
+    @Autowired
+    @Qualifier("publishRemoveUserService")
+    private IPublishUserService publishRemoveMessage;
 
     @Override
     public ChatUser removeUser(List<ChatUser> allUsers, String id) {
@@ -16,7 +23,11 @@ public class RemoveUserService implements IRemoveUserService {
 
         if (null != chatUserToRemove) {
             allUsers.remove(chatUserToRemove);
+
+            publishRemoveMessage.publish(chatUserToRemove);
+
             return chatUserToRemove;
+
         } else {
             throw new BadRequestException("fail remove user");
         }

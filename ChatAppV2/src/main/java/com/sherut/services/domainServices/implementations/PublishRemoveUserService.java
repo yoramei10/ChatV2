@@ -8,7 +8,7 @@ import com.sherut.services.domainServices.interfaces.IBuildAppMessageService;
 import com.sherut.services.domainServices.interfaces.IPublishUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class PublishNewUserService implements IPublishUserService {
+public class PublishRemoveUserService implements IPublishUserService {
 
     @Autowired
     private IBuildAppMessageService buildAppMessageService;
@@ -17,10 +17,10 @@ public class PublishNewUserService implements IPublishUserService {
     String messageContext;
 
     @Override
-    public void publish(ChatUser newUser) {
+    public void publish(ChatUser user) {
 
-        messageContext = String.format("added new user %s ", newUser.getName());
-        AppMessage appMessage = buildAppMessageService.build(newUser, AppMessageTypeENUM.ADD_USER, messageContext);
+        messageContext = String.format("remove user %s ", user.getName());
+        AppMessage appMessage = buildAppMessageService.build(user, AppMessageTypeENUM.REMOVE_USER, messageContext);
 
         publishMessage.publish(appMessage);
     }
