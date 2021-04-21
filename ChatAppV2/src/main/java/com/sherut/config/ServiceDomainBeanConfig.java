@@ -51,6 +51,11 @@ public class ServiceDomainBeanConfig {
     }
 
     @Bean
+    public IValidateExistUserByIDService validateExistUserByIDService(){
+        return new ValidateExistUserByIDService();
+    }
+
+    @Bean
     public IFactoryDM factoryDM(){
         return new FactoryDM();
     }
