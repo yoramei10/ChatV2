@@ -4,7 +4,9 @@ import com.sherut.models.DModels.interfaces.IAppMessageDM;
 import com.sherut.models.DModels.interfaces.IChatUserDM;
 import com.sherut.config.IFactoryDM;
 import com.sherut.models.DModels.interfaces.IValidateDM;
+import org.springframework.stereotype.Service;
 
+@Service
 public class FactoryDM implements IFactoryDM {
 
     @Override

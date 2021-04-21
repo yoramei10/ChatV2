@@ -5,8 +5,11 @@ import lombok.Setter;
 
 public class TopicParams {
 
-    @Getter @Setter
+    @Getter
+    @Setter
     String topicUrl;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     String topicName;
 }

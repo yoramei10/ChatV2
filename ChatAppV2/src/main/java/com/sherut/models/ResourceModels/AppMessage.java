@@ -8,14 +8,23 @@ import java.io.Serializable;
 
 public class AppMessage implements Serializable {
 
-    @Getter @Setter
+    @Getter
+    @Setter
     String id;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     String name;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     String nickName;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     String type;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     Object msgContext;
 }

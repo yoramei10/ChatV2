@@ -3,8 +3,8 @@ url:
 spring:
   kafka:
     topic: ChatTopic
+    bootstrap-servers: localhost:9092
     producer:
-      bootstrap-servers: localhost:9092
       keySerializer: 'org.apache.kafka.common.serialization.StringSerializer'
       valueSerializer: 'org.springframework.kafka.support.serializer.JsonSerializer'
     consumer:
@@ -15,6 +15,8 @@ appMessage:
   messageContext:
     addNewUser: "add new user "
     removeUser: "remove user "
+
+MASK_ID_NAME: true
 
 configuration:
   admin:

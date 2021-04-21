@@ -5,13 +5,20 @@ import lombok.Setter;
 
 public class ChatUser {
 
-    @Getter @Setter
+    @Getter
+    @Setter
     String id ;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     String name;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     String nickName;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     String password;
 
 }

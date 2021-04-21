@@ -9,7 +9,7 @@ public class GetTopicApplicationService implements IGetTopicApplicationService {
     @Value("${spring.kafka.topic}")
     String topicName;
 
-    @Value("${spring.kafka.producer.bootstrap-servers}")
+    @Value("${spring.kafka.bootstrap-servers}")
     String topicUrl;
 
     @Override
