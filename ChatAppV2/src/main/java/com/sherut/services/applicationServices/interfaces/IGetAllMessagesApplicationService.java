@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface IGetAllMessagesApplicationService {
 
-    List<AppMessage> getALlMessages(List<ChatUser> allUsers, String id);
+    List<AppMessage> getALlMessages(String id);
 }

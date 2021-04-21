@@ -1,13 +1,13 @@
 package com.sherut.services.applicationServices.implementations;
 
 import com.sherut.exceptions.BadRequestException;
+import com.sherut.models.DModels.interfaces.IAllUserDM;
 import com.sherut.models.DModels.interfaces.IValidateDM;
 import com.sherut.models.ResourceModels.ChatUser;
+import com.sherut.services.applicationServices.interfaces.IGetAllUsersApplicationService;
 import com.sherut.services.applicationServices.interfaces.ILoginApplicationService;
 import com.sherut.config.ConfigurationVariablesApp;
-import com.sherut.services.domainServices.interfaces.IPublishUserService;
-import com.sherut.services.domainServices.interfaces.IValidateNewUserService;
-import com.sherut.services.domainServices.interfaces.IValidateUserInputService;
+import com.sherut.services.domainServices.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -23,19 +23,23 @@ public class LoginApplicationService implements ILoginApplicationService {
     @Autowired
     @Qualifier("publishNewUserService")
     private IPublishUserService publishNewUserService;
+    @Autowired
+    private IGetAllUsersService getAllUsersService;
+    @Autowired
+    private IAddUserToListService adUserService;
 
 
     AtomicInteger id = new AtomicInteger();
     String USER_PREF = ConfigurationVariablesApp.userPref;
 
-    public ChatUser loginApp (List<ChatUser> allUsers, String userName, String password, String nickName){
+    public ChatUser loginApp (String userName, String password, String nickName){
 
         IValidateDM validateDM = validateUserInputService.validate(userName, password);
         if (!validateDM.getValue()){
             throw new BadRequestException(validateDM.getValidateMessage());
         }
 
-        if (validateNewUserService.checkNewUser(allUsers, userName)){
+        if (validateNewUserService.checkNewUser(getAllUsersService.getAllUsers(), userName)){
 
             ChatUser user = new ChatUser();
             user.setName(userName);
@@ -48,7 +52,7 @@ public class LoginApplicationService implements ILoginApplicationService {
                 user.setNickName(nickName);
             }
 
-            allUsers.add(user);
+            adUserService.addUser(user);
 
             publishNewUserService.publish(user);
 

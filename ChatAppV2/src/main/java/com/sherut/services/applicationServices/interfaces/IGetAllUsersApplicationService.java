@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface IGetAllUsersApplicationService {
 
-    List<ChatUser> getAllUsers (String adminId,List<ChatUser> allUsers);
+    List<ChatUser> getAllUsers (String adminId);
 }

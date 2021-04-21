@@ -29,7 +29,7 @@ public class PublishMessageTest extends BaseTest {
     public void init(){
         appMessage = buildMessage(USER_ID1, USER_NAME1, ADD_USER_TYPE, MESSAGE_CONTEXCT);
 
-        ReflectionTestUtils.setField(restControllerApp, "allUsers", buildAllUsers());
+        ReflectionTestUtils.setField(allUsers, "allUsers", buildAllUsers());
         try {
             Thread.sleep(10);
         } catch (InterruptedException e) {

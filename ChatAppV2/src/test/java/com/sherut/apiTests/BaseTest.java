@@ -2,6 +2,7 @@ package com.sherut.apiTests;
 
 import com.sherut.api.RestControllerApp;
 import com.sherut.messaging.interfaces.IPublishMessageService;
+import com.sherut.models.DModels.interfaces.IAllUserDM;
 import com.sherut.models.ResourceModels.AppMessage;
 import com.sherut.models.ResourceModels.ChatUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ public class BaseTest {
 
     @Autowired
     protected RestControllerApp restControllerApp;
+    @Autowired
+    protected IAllUserDM allUsers;
 
     @Autowired
     @MockBean
