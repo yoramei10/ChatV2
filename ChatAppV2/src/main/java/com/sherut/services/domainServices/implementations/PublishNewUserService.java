@@ -7,6 +7,7 @@ import com.sherut.models.enums.AppMessageTypeENUM;
 import com.sherut.services.domainServices.interfaces.IBuildAppMessageService;
 import com.sherut.services.domainServices.interfaces.IPublishUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 public class PublishNewUserService implements IPublishUserService {
 
@@ -14,13 +15,13 @@ public class PublishNewUserService implements IPublishUserService {
     private IBuildAppMessageService buildAppMessageService;
     @Autowired
     private IPublishMessage publishMessage;
+    @Value("${appMessage.messageContext.addNewUser}")
     String messageContext;
 
     @Override
     public void publish(ChatUser newUser) {
 
-        messageContext = String.format("added new user %s ", newUser.getName());
-        AppMessage appMessage = buildAppMessageService.build(newUser, AppMessageTypeENUM.ADD_USER, messageContext);
+        AppMessage appMessage = buildAppMessageService.build(newUser, AppMessageTypeENUM.ADD_USER, messageContext + newUser.getName());
 
         publishMessage.publish(appMessage);
     }

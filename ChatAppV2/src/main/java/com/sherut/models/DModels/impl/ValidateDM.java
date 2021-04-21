@@ -1,10 +1,14 @@
 package com.sherut.models.DModels.impl;
 
 import com.sherut.models.DModels.interfaces.IValidateDM;
+import lombok.Getter;
+import lombok.Setter;
 
 public class ValidateDM implements IValidateDM {
 
+    @Getter @Setter
     private boolean value;
+    @Getter @Setter
     private String message;
 
     @Override
@@ -12,10 +16,6 @@ public class ValidateDM implements IValidateDM {
         return value;
     }
 
-    @Override
-    public void setValue(boolean value) {
-        this.value = value;
-    }
 
     @Override
     public String getValidateMessage() {

@@ -7,6 +7,7 @@ import com.sherut.models.enums.AppMessageTypeENUM;
 import com.sherut.services.domainServices.interfaces.IBuildAppMessageService;
 import com.sherut.services.domainServices.interfaces.IPublishUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 public class PublishRemoveUserService implements IPublishUserService {
 
@@ -14,13 +15,13 @@ public class PublishRemoveUserService implements IPublishUserService {
     private IBuildAppMessageService buildAppMessageService;
     @Autowired
     private IPublishMessage publishMessage;
+    @Value("${appMessage.messageContext.removeUser}")
     String messageContext;
 
     @Override
     public void publish(ChatUser user) {
 
-        messageContext = String.format("remove user %s ", user.getName());
-        AppMessage appMessage = buildAppMessageService.build(user, AppMessageTypeENUM.REMOVE_USER, messageContext);
+        AppMessage appMessage = buildAppMessageService.build(user, AppMessageTypeENUM.REMOVE_USER, messageContext + user.getName());
 
         publishMessage.publish(appMessage);
     }

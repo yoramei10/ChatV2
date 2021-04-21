@@ -32,4 +32,9 @@ public class ApplicationServiceBeanConfig {
     public IPublishMessageApplicationService publishMessageApplicationService(){
         return new PublishMessageApplicationService();
     }
+
+    @Bean
+    public IGetTopicApplicationService getTopicApplicationService(){
+        return new GetTopicApplicationService();
+    }
 }

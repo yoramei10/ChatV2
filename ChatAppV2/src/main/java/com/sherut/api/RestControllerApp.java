@@ -5,6 +5,7 @@ import com.sherut.mappers.interfaces.IMapAppMessageToMessagingAppMessage;
 import com.sherut.mappers.interfaces.IMapChatUserToChatUserDM;
 import com.sherut.models.ResourceModels.AppMessage;
 import com.sherut.models.ResourceModels.ChatUser;
+import com.sherut.models.ResourceModels.TopicParams;
 import com.sherut.services.applicationServices.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,10 +36,11 @@ public class RestControllerApp {
     private IMapAppMessage mapAppMessage;
     @Autowired
     private IMapAppMessageToMessagingAppMessage mapAppMessageToMessagingAppMessage;
+    @Autowired
+    private IGetTopicApplicationService getTopicApplicationService;
 
     @Value("${url.baseUrl}")
     String BASEAPI1;
-//    final String  BASEAPI = BASEAPI1;
     final String BASEAPI = "/chatApp";
 
     //TODO: implement it in database
@@ -101,6 +103,15 @@ public class RestControllerApp {
         publishMessageApplicationService.publish(allUsers, id, appMessage);
 
         return new ResponseEntity<String>( "message was published successfully", HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = BASEAPI + "/getTopic",
+            produces = "application/json",
+            method = RequestMethod.GET)
+    public ResponseEntity<TopicParams> getTopic() {
+
+        TopicParams topicParams = getTopicApplicationService.getTopicParams();
+        return new ResponseEntity<TopicParams>(topicParams, HttpStatus.OK);
     }
 
 }
