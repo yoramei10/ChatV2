@@ -37,4 +37,9 @@ public class ApplicationServiceBeanConfig {
     public IGetTopicApplicationService getTopicApplicationService(){
         return new GetTopicApplicationService();
     }
+
+    @Bean
+    public IGetAllMessagesApplicationService getAllMessagesApplicationService(){
+        return new GetAllMessagesApplicationService();
+    }
 }

@@ -1,6 +1,6 @@
 package com.sherut.services.domainServices.implementations;
 
-import com.sherut.messaging.interfaces.IPublishMessage;
+import com.sherut.messaging.interfaces.IPublishMessageService;
 import com.sherut.models.ResourceModels.AppMessage;
 import com.sherut.models.ResourceModels.ChatUser;
 import com.sherut.models.enums.AppMessageTypeENUM;
@@ -14,7 +14,7 @@ public class PublishNewUserService implements IPublishUserService {
     @Autowired
     private IBuildAppMessageService buildAppMessageService;
     @Autowired
-    private IPublishMessage publishMessage;
+    private IPublishMessageService publishMessage;
     @Value("${appMessage.messageContext.addNewUser}")
     String messageContext;
 
