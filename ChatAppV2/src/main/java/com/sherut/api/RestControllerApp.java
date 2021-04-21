@@ -44,7 +44,7 @@ public class RestControllerApp {
     final String BASEAPI = "/chatApp";
 
     //TODO: implement it in database
-    List<ChatUser> allUsers = new ArrayList<>();
+        List<ChatUser> allUsers = new ArrayList<>();
 
 
     @RequestMapping(value = BASEAPI + "/login",
