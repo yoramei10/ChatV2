@@ -34,7 +34,7 @@ public class MapAppMessage implements IMapAppMessage {
 
         AppMessage appMessage = new AppMessage();
         appMessage.setId(appMessageDM.getId());
-        appMessage.setName(appMessageDM.getName());
+        appMessage.setNickName(appMessageDM.getName());
         appMessage.setMsgContext(appMessageDM.getMsgContext());
 
         return appMessage;

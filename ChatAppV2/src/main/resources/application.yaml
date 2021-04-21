@@ -6,9 +6,18 @@ spring:
     producer:
       bootstrap-servers: localhost:9092
       keySerializer: 'org.apache.kafka.common.serialization.StringSerializer'
-      valueSerializerr: 'org.apache.kafka.common.serialization.JsonSerializer'
+      valueSerializer: 'org.springframework.kafka.support.serializer.JsonSerializer'
+    consumer:
+      groupId: group_id
+      keyDeserializer: 'org.apache.kafka.common.serialization.StringDeserializer'
+      valueDeserializer: 'org.springframework.kafka.support.serializer.JsonDeserializer'
 appMessage:
   messageContext:
-    addNewUser: "added new user "
+    addNewUser: "add new user "
     removeUser: "remove user "
+
+configuration:
+  admin:
+    user: ADMIN
+
 

@@ -4,8 +4,8 @@ import com.sherut.api.RestControllerApp;
 import com.sherut.exceptions.BadRequestException;
 import com.sherut.models.ResourceModels.AppMessage;
 import com.sherut.models.ResourceModels.ChatUser;
-import org.junit.Before;
-import org.junit.jupiter.api.Assertions;
+import com.sherut.services.domainServices.implementations.BuildAppMessageService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -23,9 +23,10 @@ import static org.mockito.Mockito.verify;
 
 public class LoginTest extends BaseTest {
 
-    private static final String ADD_USER = "ADD_USER";
     @Autowired
     private RestControllerApp restControllerApp;
+    @Autowired
+    private BuildAppMessageService buildAppMessageService;
 
 
     @BeforeEach
@@ -36,6 +37,11 @@ public class LoginTest extends BaseTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    @AfterEach
+    public void after(){
+        ReflectionTestUtils.setField(buildAppMessageService, "MASK_ID_NAME", true);
     }
 
     @Test
@@ -52,8 +58,33 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(NICKNAME1, user1.getBody().getNickName());
         Assert.assertEquals(PASSWORD1, user1.getBody().getPassword());
 
-        Assert.assertEquals(ADD_USER, argumentCaptor.getValue().getType());
+        AppMessage message = argumentCaptor.getValue();
+        Assert.assertNull("should be null", message.getId());
+        Assert.assertNull("should be null", message.getName());
+        Assert.assertEquals(ADD_USER_TYPE, message.getType());
+        Assert.assertEquals(NICKNAME1, message.getNickName());
+        Assert.assertTrue(message.getMsgContext().toString().contains("add new user"));
     }
+
+    @Test
+    public void loginNewUser_PublishNewUserIncludeId_Success(){
+
+        ReflectionTestUtils.setField(buildAppMessageService, "MASK_ID_NAME", false);
+
+        restControllerApp.login(USER_NAME1, USER_NAME1, NICKNAME1);
+
+        ArgumentCaptor<AppMessage> argumentCaptor = ArgumentCaptor.forClass(AppMessage.class);
+
+        verify(publishMessageMock, times(1)).publish(argumentCaptor.capture());
+
+        AppMessage message = argumentCaptor.getValue();
+        Assert.assertTrue(message.getId().contains(PREF+USER_NAME1));
+        Assert.assertEquals(USER_NAME1, message.getName());
+        Assert.assertEquals(ADD_USER_TYPE, message.getType());
+        Assert.assertEquals(NICKNAME1, message.getNickName());
+        Assert.assertTrue(message.getMsgContext().toString().contains("add new user"));
+    }
+
     @Test
     public void loginNewUser_noNickName_Success(){
 
@@ -70,11 +101,13 @@ public class LoginTest extends BaseTest {
     @Test
     public void loginExistUser_fail() {
 
-        restControllerApp.login(USER_NAME1, USER_NAME1, null);
-
-        Assertions.assertThrows(BadRequestException.class, () -> {
+        try {
             restControllerApp.login(USER_NAME1, USER_NAME1, null);
-        });
+            restControllerApp.login(USER_NAME1, USER_NAME1, null);
+            Assert.fail();
+        }catch (BadRequestException ex){
+            Assert.assertEquals("user already exist", ex.getMessage());
+        }
     }
 
         @Test

@@ -14,7 +14,7 @@ public class MapAppMessageToMessagingAppMessage implements IMapAppMessageToMessa
 
         MessageAppMessage messageAppMessage = new MessageAppMessage();
         messageAppMessage.setId(appMessage.getId());
-        messageAppMessage.setName(appMessage.getName());
+        messageAppMessage.setName(appMessage.getNickName());
         messageAppMessage.setMsgContext(appMessage.getMsgContext());
 
         return messageAppMessage;
@@ -29,7 +29,7 @@ public class MapAppMessageToMessagingAppMessage implements IMapAppMessageToMessa
 
         AppMessage appMessage = new AppMessage();
         appMessage.setId(messageAppMessage.getId());
-        appMessage.setName(messageAppMessage.getName());
+        appMessage.setNickName(messageAppMessage.getName());
         appMessage.setMsgContext(messageAppMessage.getMsgContext());
 
         return appMessage;

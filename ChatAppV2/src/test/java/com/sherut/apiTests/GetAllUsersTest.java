@@ -3,18 +3,21 @@ package com.sherut.apiTests;
 import com.sherut.api.RestControllerApp;
 import com.sherut.exceptions.BadRequestException;
 import com.sherut.models.ResourceModels.ChatUser;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GetAllUsersTest extends BaseTest{
 
 
-    @BeforeEach
+    @Before
     public void init(){
 
         ReflectionTestUtils.setField(restControllerApp, "allUsers", buildAllUsers());
@@ -24,6 +27,11 @@ public class GetAllUsersTest extends BaseTest{
             e.printStackTrace();
         }
     }
+
+//    @After
+//    public void after(){
+//        ReflectionTestUtils.setField(restControllerApp, "allUsers", new ArrayList<>());
+//    }
 
     @Test
     public void getAllUser_admin_Success(){

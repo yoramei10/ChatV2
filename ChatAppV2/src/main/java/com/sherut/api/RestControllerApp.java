@@ -38,6 +38,8 @@ public class RestControllerApp {
     private IMapAppMessageToMessagingAppMessage mapAppMessageToMessagingAppMessage;
     @Autowired
     private IGetTopicApplicationService getTopicApplicationService;
+    @Autowired
+    private IGetAllMessagesApplicationService getAllMessagesApplicationService;
 
     @Value("${url.baseUrl}")
     String BASEAPI1;
@@ -112,6 +114,16 @@ public class RestControllerApp {
 
         TopicParams topicParams = getTopicApplicationService.getTopicParams();
         return new ResponseEntity<TopicParams>(topicParams, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = BASEAPI + "/getAllMessages",
+            produces = "application/json",
+            method = RequestMethod.GET)
+    public ResponseEntity<List<AppMessage>> getAllMessages(@RequestParam(value = "id") @PathVariable("id") String id) {
+
+        List<AppMessage> aLlMessages = getAllMessagesApplicationService.getALlMessages(allUsers, id);
+
+        return new ResponseEntity<List<AppMessage>>(aLlMessages, HttpStatus.OK);
     }
 
 }

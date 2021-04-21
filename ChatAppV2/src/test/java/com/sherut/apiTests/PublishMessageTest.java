@@ -3,18 +3,12 @@ package com.sherut.apiTests;
 import com.sherut.api.RestControllerApp;
 import com.sherut.exceptions.BadRequestException;
 import com.sherut.models.ResourceModels.AppMessage;
-import com.sherut.models.ResourceModels.ChatUser;
-import com.sherut.models.enums.AppMessageTypeENUM;
 import org.junit.Assert;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
-
-import java.util.ArrayList;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -25,18 +19,15 @@ public class PublishMessageTest extends BaseTest {
 
     private static final String ADD_USER = "ADD_USER";
     private AppMessage appMessage;
-    private String MESSAGE_CONTEXCT = "new message";
+    private static final String MESSAGE_CONTEXCT = "new message";
+
     @Autowired
     private RestControllerApp restControllerApp;
 
 
     @BeforeEach
     public void init(){
-        appMessage = new AppMessage();
-        appMessage.setId(USER_ID1);
-        appMessage.setName(USER_NAME1);
-        appMessage.setType(ADD_USER_TYPE);
-        appMessage.setMsgContext(MESSAGE_CONTEXCT);
+        appMessage = buildMessage(USER_ID1, USER_NAME1, ADD_USER_TYPE, MESSAGE_CONTEXCT);
 
         ReflectionTestUtils.setField(restControllerApp, "allUsers", buildAllUsers());
         try {
@@ -55,10 +46,12 @@ public class PublishMessageTest extends BaseTest {
 
         verify(publishMessageMock, times(1)).publish(argumentCaptor.capture());
 
-        Assert.assertEquals(MESSAGE_TYPE, argumentCaptor.getValue().getType());
-        Assert.assertEquals(USER_NAME1, argumentCaptor.getValue().getName());
-        Assert.assertEquals(USER_ID1, argumentCaptor.getValue().getId());
-        Assert.assertEquals(MESSAGE_CONTEXCT, argumentCaptor.getValue().getMsgContext());
+        AppMessage message = argumentCaptor.getValue();
+        Assert.assertEquals(MESSAGE_TYPE, message.getType());
+        Assert.assertEquals(USER_NAME1, message.getNickName());
+        Assert.assertNull(null, message.getId());
+        Assert.assertNull(null, message.getName());
+        Assert.assertEquals(MESSAGE_CONTEXCT, message.getMsgContext());
 
     }
 

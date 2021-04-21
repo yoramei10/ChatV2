@@ -1,7 +1,8 @@
 package com.sherut.apiTests;
 
 import com.sherut.api.RestControllerApp;
-import com.sherut.messaging.interfaces.IPublishMessage;
+import com.sherut.messaging.interfaces.IPublishMessageService;
+import com.sherut.models.ResourceModels.AppMessage;
 import com.sherut.models.ResourceModels.ChatUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,7 +21,7 @@ public class BaseTest {
 
     @Autowired
     @MockBean
-    protected IPublishMessage publishMessageMock;
+    protected IPublishMessageService publishMessageMock;
 
     String PREF = "User_";
 
@@ -61,5 +62,15 @@ public class BaseTest {
         chatUsers.add(chatUser2);
 
         return chatUsers;
+    }
+
+    protected AppMessage buildMessage(String USER_ID1, String USER_NAME1, String ADD_USER_TYPE, String MESSAGE_CONTEXCT){
+        AppMessage appMessage = new AppMessage();
+        appMessage.setId(USER_ID1);
+        appMessage.setNickName(USER_NAME1);
+        appMessage.setType(ADD_USER_TYPE);
+        appMessage.setMsgContext(MESSAGE_CONTEXCT);
+
+        return appMessage;
     }
 }

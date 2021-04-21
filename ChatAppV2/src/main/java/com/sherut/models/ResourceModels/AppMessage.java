@@ -13,6 +13,8 @@ public class AppMessage implements Serializable {
     @Getter @Setter
     String name;
     @Getter @Setter
+    String nickName;
+    @Getter @Setter
     String type;
     @Getter @Setter
     Object msgContext;

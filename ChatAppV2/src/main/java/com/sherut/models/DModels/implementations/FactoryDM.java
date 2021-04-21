@@ -1,4 +1,4 @@
-package com.sherut.models.DModels.impl;
+package com.sherut.models.DModels.implementations;
 
 import com.sherut.models.DModels.interfaces.IAppMessageDM;
 import com.sherut.models.DModels.interfaces.IChatUserDM;

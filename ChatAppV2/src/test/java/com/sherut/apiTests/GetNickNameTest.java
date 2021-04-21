@@ -1,12 +1,14 @@
 package com.sherut.apiTests;
 
 import com.sherut.exceptions.BadRequestException;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GetNickNameTest extends BaseTest{
@@ -20,6 +22,11 @@ public class GetNickNameTest extends BaseTest{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    @After
+    public void after(){
+        ReflectionTestUtils.setField(restControllerApp, "allUsers", new ArrayList<>());
     }
 
     @Test

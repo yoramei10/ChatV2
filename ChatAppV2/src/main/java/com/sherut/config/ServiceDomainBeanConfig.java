@@ -1,6 +1,8 @@
 package com.sherut.config;
 
-import com.sherut.models.DModels.impl.FactoryDM;
+import com.sherut.models.DModels.implementations.AllMessagesDM;
+import com.sherut.models.DModels.implementations.FactoryDM;
+import com.sherut.models.DModels.interfaces.IAllMessagesDM;
 import com.sherut.services.domainServices.implementations.*;
 import com.sherut.services.domainServices.interfaces.*;
 import org.springframework.context.annotation.Bean;
@@ -58,6 +60,16 @@ public class ServiceDomainBeanConfig {
     @Bean
     public IFactoryDM factoryDM(){
         return new FactoryDM();
+    }
+
+//    @Bean
+//    public IAllMessagesDM allMessagesDM(){
+//        return new AllMessagesDM();
+//    }
+
+    @Bean
+    public IConsumeHandlerService consumeHandlerService(){
+        return new ConsumeHandlerService();
     }
 
 }
