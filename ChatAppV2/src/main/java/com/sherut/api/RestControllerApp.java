@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -45,9 +44,6 @@ public class RestControllerApp {
     String BASEAPI1;
     final String BASEAPI = "/chatApp";
 
-    //TODO: implement it in database
-        List<ChatUser> allUsers = new ArrayList<>();
-
 
     @RequestMapping(value = BASEAPI + "/login",
             produces = "application/json",
@@ -56,7 +52,7 @@ public class RestControllerApp {
                                           @RequestParam(value = "password") @PathVariable("password") String password,
                                           @RequestParam(value = "nickName", required = false) @PathVariable("name") String nickName) {
 
-        ChatUser user = login.loginApp(allUsers, userName, password, nickName);
+        ChatUser user = login.loginApp(userName, password, nickName);
 
             return new ResponseEntity<ChatUser>(user, HttpStatus.OK);
     }
@@ -66,7 +62,7 @@ public class RestControllerApp {
             method = RequestMethod.DELETE)
     public ResponseEntity<String> removeUser(@RequestParam(value = "id") @PathVariable("id") String id) {
 
-        ChatUser userToRemove = removeUserApplicationService.removeUser(allUsers, id);
+        ChatUser userToRemove = removeUserApplicationService.removeUser(id);
 
         return new ResponseEntity<String>(String.format("user %s was removed", userToRemove.getName()), HttpStatus.OK);
     }
@@ -76,7 +72,7 @@ public class RestControllerApp {
             method = RequestMethod.GET)
     public ResponseEntity<List<String>> getAllNickNames(@RequestParam(value = "id") @PathVariable("id") String id) {
 
-        List<String> allNickNames = getAllNickNames.getAllNickNames(id, allUsers);
+        List<String> allNickNames = getAllNickNames.getAllNickNames(id);
 
         return new ResponseEntity<List<String>>(allNickNames, HttpStatus.OK);
     }
@@ -86,11 +82,7 @@ public class RestControllerApp {
             method = RequestMethod.GET)
     public ResponseEntity<List<ChatUser>>getAllUsers(@RequestParam(value = "id") @PathVariable("id") String id) {
 
-        List<ChatUser> allUsersDMToResponse = getAllUsers.getAllUsers(id, allUsers);
-
-        if (null == allUsersDMToResponse) {
-            return new ResponseEntity<List<ChatUser>>((List<ChatUser>) null, HttpStatus.BAD_REQUEST);
-        }
+        List<ChatUser> allUsers = getAllUsers.getAllUsers(id);
 
         return new ResponseEntity<List<ChatUser>>(allUsers, HttpStatus.OK);
     }
@@ -102,7 +94,7 @@ public class RestControllerApp {
     public ResponseEntity<String> publishNewMessage(@RequestParam(value = "id") @PathVariable("id") String id,
                                             @RequestBody AppMessage appMessage) {
 
-        publishMessageApplicationService.publish(allUsers, id, appMessage);
+        publishMessageApplicationService.publish(id, appMessage);
 
         return new ResponseEntity<String>( "message was published successfully", HttpStatus.BAD_REQUEST);
     }
@@ -121,7 +113,7 @@ public class RestControllerApp {
             method = RequestMethod.GET)
     public ResponseEntity<List<AppMessage>> getAllMessages(@RequestParam(value = "id") @PathVariable("id") String id) {
 
-        List<AppMessage> aLlMessages = getAllMessagesApplicationService.getALlMessages(allUsers, id);
+        List<AppMessage> aLlMessages = getAllMessagesApplicationService.getALlMessages(id);
 
         return new ResponseEntity<List<AppMessage>>(aLlMessages, HttpStatus.OK);
     }

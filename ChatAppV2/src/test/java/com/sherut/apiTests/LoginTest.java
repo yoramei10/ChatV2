@@ -31,7 +31,7 @@ public class LoginTest extends BaseTest {
 
     @BeforeEach
     public void init(){
-        ReflectionTestUtils.setField(restControllerApp, "allUsers", new ArrayList<ChatUser>());
+        ReflectionTestUtils.setField(allUsers, "allUsers", new ArrayList<ChatUser>());
         try {
             Thread.sleep(10);
         } catch (InterruptedException e) {

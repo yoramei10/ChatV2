@@ -27,7 +27,7 @@ public class GetAllMessagesTest extends BaseTest {
 
     @BeforeEach
     public void init(){
-        ReflectionTestUtils.setField(restControllerApp, "allUsers", buildAllUsers());
+        ReflectionTestUtils.setField(allUsers, "allUsers", buildAllUsers());
 
         appMessage = buildMessage(USER_ID1, USER_NAME1, ADD_USER_TYPE, MESSAGE_CONTEXCT);
         appMessage2 = buildMessage(USER_ID2, USER_NAME2, ADD_USER_TYPE, MESSAGE_CONTEXCT);
@@ -41,7 +41,7 @@ public class GetAllMessagesTest extends BaseTest {
 
     @After
     public void after(){
-        ReflectionTestUtils.setField(restControllerApp, "allUsers", new ArrayList<ChatUser>());
+        ReflectionTestUtils.setField(allUsers, "allUsers", new ArrayList<ChatUser>());
     }
 
     @Test

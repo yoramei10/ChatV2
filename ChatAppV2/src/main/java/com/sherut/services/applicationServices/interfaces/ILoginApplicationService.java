@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ILoginApplicationService {
 
-    public ChatUser loginApp (List<ChatUser> allUsers, String userName, String password, String nickName);
+    public ChatUser loginApp ( String userName, String password, String nickName);
 }

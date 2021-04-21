@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface IPublishMessageApplicationService {
 
-    public void publish (List<ChatUser> allUsers, String userId, AppMessage appMessage);
+    public void publish (String userId, AppMessage appMessage);
 }

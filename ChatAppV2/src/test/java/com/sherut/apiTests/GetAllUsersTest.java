@@ -1,17 +1,13 @@
 package com.sherut.apiTests;
 
-import com.sherut.api.RestControllerApp;
 import com.sherut.exceptions.BadRequestException;
 import com.sherut.models.ResourceModels.ChatUser;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GetAllUsersTest extends BaseTest{
@@ -20,7 +16,7 @@ public class GetAllUsersTest extends BaseTest{
     @Before
     public void init(){
 
-        ReflectionTestUtils.setField(restControllerApp, "allUsers", buildAllUsers());
+        ReflectionTestUtils.setField(allUsers, "allUsers", buildAllUsers());
         try {
             Thread.sleep(10);
         } catch (InterruptedException e) {

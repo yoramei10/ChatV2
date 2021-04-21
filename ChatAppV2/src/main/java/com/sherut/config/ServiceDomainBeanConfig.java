@@ -62,14 +62,19 @@ public class ServiceDomainBeanConfig {
         return new FactoryDM();
     }
 
-//    @Bean
-//    public IAllMessagesDM allMessagesDM(){
-//        return new AllMessagesDM();
-//    }
-
     @Bean
     public IConsumeHandlerService consumeHandlerService(){
         return new ConsumeHandlerService();
+    }
+
+    @Bean
+    public IGetAllUsersService getAllUsersService(){
+        return new GetAllUsersService();
+    }
+
+    @Bean
+    public IAddUserToListService addUser(){
+        return new AddUserToListService();
     }
 
 }

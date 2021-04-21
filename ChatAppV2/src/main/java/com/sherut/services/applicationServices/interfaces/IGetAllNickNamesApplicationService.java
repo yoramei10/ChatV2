@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface IGetAllNickNamesApplicationService {
 
-    List<String> getAllNickNames(String id, List<ChatUser> allUsers);
+    List<String> getAllNickNames(String id);
 }

@@ -5,6 +5,7 @@ import com.sherut.models.DModels.interfaces.IAllMessagesDM;
 import com.sherut.models.ResourceModels.AppMessage;
 import com.sherut.models.ResourceModels.ChatUser;
 import com.sherut.services.applicationServices.interfaces.IGetAllMessagesApplicationService;
+import com.sherut.services.domainServices.interfaces.IGetAllUsersService;
 import com.sherut.services.domainServices.interfaces.IValidateExistUserByIDService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,11 +17,13 @@ public class GetAllMessagesApplicationService implements IGetAllMessagesApplicat
     private IValidateExistUserByIDService validateExistUserByIDService;
     @Autowired
     private IAllMessagesDM allMessagesDM;
+    @Autowired
+    private IGetAllUsersService getAllUsersService;
 
     @Override
-    public List<AppMessage> getALlMessages(List<ChatUser> allUsers, String id) {
+    public List<AppMessage> getALlMessages(String id) {
 
-        if(validateExistUserByIDService.validate(allUsers, id)){
+        if(validateExistUserByIDService.validate(getAllUsersService.getAllUsers(), id)){
             return allMessagesDM.getAllMessages();
         }
         throw new BadRequestException("wrong user");
