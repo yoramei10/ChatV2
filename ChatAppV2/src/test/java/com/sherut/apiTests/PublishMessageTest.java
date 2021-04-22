@@ -3,12 +3,15 @@ package com.sherut.apiTests;
 import com.sherut.api.RestControllerApp;
 import com.sherut.exceptions.BadRequestException;
 import com.sherut.models.ResourceModels.AppMessage;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.util.ReflectionTestUtils;
+
+import java.util.ArrayList;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -35,6 +38,11 @@ public class PublishMessageTest extends BaseTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    @After
+    public void afterTests(){
+        ReflectionTestUtils.setField(allUsers, "allUsers", new ArrayList<>());
     }
 
     @Test

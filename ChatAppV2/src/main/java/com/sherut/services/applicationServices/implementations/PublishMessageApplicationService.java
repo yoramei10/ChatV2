@@ -10,9 +10,12 @@ import com.sherut.messaging.interfaces.IPublishMessageService;
 import com.sherut.services.domainServices.interfaces.IGetAllUsersService;
 import com.sherut.services.domainServices.interfaces.IValidateExistUserByIDService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class PublishMessageApplicationService implements IPublishMessageApplicationService {
 
     @Autowired
@@ -21,8 +24,8 @@ public class PublishMessageApplicationService implements IPublishMessageApplicat
     private IValidateExistUserByIDService validateExistUserByIDService;
     @Autowired
     private IGetAllUsersService getAllUsersService;
-
-    private boolean MASK_ID_NAME = ConfigurationVariablesApp.MASK_ID_NAME;
+    @Value("${MASK_ID_NAME}")
+    private boolean MASK_ID_NAME;
 
 
     @Override

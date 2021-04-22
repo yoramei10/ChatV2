@@ -1,10 +1,11 @@
 package com.sherut.services.domainServices.implementations;
 
 
-import com.sherut.config.ConfigurationVariablesApp;
 import com.sherut.services.domainServices.interfaces.IValidateAdminService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ValidateAdminService implements IValidateAdminService {
 
     @Value("${configuration.admin.user}")

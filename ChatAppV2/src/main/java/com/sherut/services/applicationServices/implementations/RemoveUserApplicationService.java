@@ -6,9 +6,11 @@ import com.sherut.services.applicationServices.interfaces.IRemoveUserApplication
 import com.sherut.services.domainServices.interfaces.IGetAllUsersService;
 import com.sherut.services.domainServices.interfaces.IRemoveUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class RemoveUserApplicationService implements IRemoveUserApplicationService {
 
     @Autowired

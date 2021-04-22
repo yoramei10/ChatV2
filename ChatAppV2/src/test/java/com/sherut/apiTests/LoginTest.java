@@ -31,7 +31,7 @@ public class LoginTest extends BaseTest {
 
     @BeforeEach
     public void init(){
-        ReflectionTestUtils.setField(allUsers, "allUsers", new ArrayList<ChatUser>());
+        ReflectionTestUtils.setField(allUsers, "allUsers", new ArrayList<>());
         try {
             Thread.sleep(10);
         } catch (InterruptedException e) {
@@ -106,7 +106,7 @@ public class LoginTest extends BaseTest {
             restControllerApp.login(USER_NAME1, USER_NAME1, null);
             Assert.fail();
         }catch (BadRequestException ex){
-            Assert.assertEquals("user already exist", ex.getMessage());
+            Assert.assertTrue(ex.getMessage().contains(NO_VALID_USERNAME_MESSAGE));
         }
     }
 
@@ -120,7 +120,7 @@ public class LoginTest extends BaseTest {
                 restControllerApp.login(USER_NAME, PASSWORD, null);
                 Assert.fail();
             }catch (BadRequestException ex){
-                Assert.assertEquals("not valid userName, ", ex.getMessage());
+                Assert.assertTrue("not valid userName, ", ex.getMessage().contains(NO_VALID_USERNAME_MESSAGE));
             }
     }
 
@@ -132,7 +132,7 @@ public class LoginTest extends BaseTest {
             restControllerApp.login(USER_NAME1, PASSWORD, null);
             Assert.fail();
         }catch (BadRequestException ex){
-            Assert.assertEquals("not valid password", ex.getMessage());
+            Assert.assertTrue(ex.getMessage().contains(NO_VALID_PASSWORD_MESSAGE));
         }
     }
 
@@ -145,7 +145,8 @@ public class LoginTest extends BaseTest {
             restControllerApp.login(USER_NAME, PASSWORD, null);
             Assert.fail();
         }catch (BadRequestException ex){
-            Assert.assertEquals("not valid userName, not valid password", ex.getMessage());
+            Assert.assertTrue(ex.getMessage().contains(NO_VALID_USERNAME_MESSAGE));
+            Assert.assertTrue(ex.getMessage().contains(NO_VALID_PASSWORD_MESSAGE));
         }
     }
 }

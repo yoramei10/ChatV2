@@ -8,9 +8,11 @@ import com.sherut.services.applicationServices.interfaces.IGetAllMessagesApplica
 import com.sherut.services.domainServices.interfaces.IGetAllUsersService;
 import com.sherut.services.domainServices.interfaces.IValidateExistUserByIDService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class GetAllMessagesApplicationService implements IGetAllMessagesApplicationService {
 
     @Autowired

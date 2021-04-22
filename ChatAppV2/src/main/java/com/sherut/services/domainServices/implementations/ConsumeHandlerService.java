@@ -4,7 +4,9 @@ import com.sherut.models.DModels.interfaces.IAllMessagesDM;
 import com.sherut.models.ResourceModels.AppMessage;
 import com.sherut.services.domainServices.interfaces.IConsumeHandlerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ConsumeHandlerService implements IConsumeHandlerService {
 
     @Autowired

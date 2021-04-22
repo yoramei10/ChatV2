@@ -1,23 +1,21 @@
 package com.sherut.services.applicationServices.implementations;
 
+import com.sherut.config.IFactoryDM;
 import com.sherut.exceptions.BadRequestException;
-import com.sherut.models.DModels.interfaces.IAllUserDM;
 import com.sherut.models.DModels.interfaces.IValidateDM;
 import com.sherut.models.ResourceModels.ChatUser;
-import com.sherut.services.applicationServices.interfaces.IGetAllUsersApplicationService;
 import com.sherut.services.applicationServices.interfaces.ILoginApplicationService;
 import com.sherut.config.ConfigurationVariablesApp;
 import com.sherut.services.domainServices.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Service
 public class LoginApplicationService implements ILoginApplicationService {
 
-    @Autowired
-    private IValidateNewUserService validateNewUserService;
     @Autowired
     private IValidateUserInputService validateUserInputService;
     @Autowired
@@ -27,28 +25,39 @@ public class LoginApplicationService implements ILoginApplicationService {
     private IGetAllUsersService getAllUsersService;
     @Autowired
     private IAddUserToListService adUserService;
+    @Autowired
+    private IFactoryDM factoryDM;
+    @Autowired
+    private IValidateUniqueUserService validateUniqueUserService;
 
 
     AtomicInteger id = new AtomicInteger();
     String USER_PREF = ConfigurationVariablesApp.userPref;
 
-    public ChatUser loginApp (String userName, String password, String nickName){
+    public ChatUser loginApp (String userName, String password, String nickName) {
 
-        IValidateDM validateDM = validateUserInputService.validate(userName, password);
-        if (!validateDM.getValue()){
+        IValidateDM validateDM = factoryDM.getValidateDM();
+        validateDM.setValue(true);
+        validateDM.setValidateMessage("");
+
+        validateDM = validateUserInputService.validate(userName, password, nickName, validateDM);
+        if (!validateDM.getValue()) {
             throw new BadRequestException(validateDM.getValidateMessage());
         }
 
-        if (validateNewUserService.checkNewUser(getAllUsersService.getAllUsers(), userName)){
+        validateDM = validateUniqueUserService.validate(userName, nickName, getAllUsersService.getAllUsers(), validateDM);
+        if (!validateDM.getValue()) {
+            throw new BadRequestException(validateDM.getValidateMessage());
+        } else {
 
             ChatUser user = new ChatUser();
             user.setName(userName);
             user.setId(USER_PREF + userName + "_" + id.incrementAndGet());
             user.setPassword(password);
 
-            if (null == nickName || nickName.length() == 0){
+            if (null == nickName || nickName.length() == 0) {
                 user.setNickName(userName);
-            }else{
+            } else {
                 user.setNickName(nickName);
             }
 
@@ -57,8 +66,6 @@ public class LoginApplicationService implements ILoginApplicationService {
             publishNewUserService.publish(user);
 
             return user;
-        }else {
-            throw new BadRequestException("user already exist");
         }
     }
 }

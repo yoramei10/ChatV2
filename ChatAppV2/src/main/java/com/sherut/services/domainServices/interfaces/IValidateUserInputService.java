@@ -4,5 +4,5 @@ import com.sherut.models.DModels.interfaces.IValidateDM;
 
 public interface IValidateUserInputService {
 
-    IValidateDM validate (String userName, String password);
+    IValidateDM validate (String userName, String password, String nickName, IValidateDM validateDM);
 }

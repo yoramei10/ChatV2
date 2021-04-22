@@ -57,7 +57,7 @@ public class RestControllerApp {
             return new ResponseEntity<ChatUser>(user, HttpStatus.OK);
     }
 
-    @RequestMapping(value = BASEAPI + "/removeUser",
+    @RequestMapping(value = BASEAPI + "/logout",
             produces = "application/json",
             method = RequestMethod.DELETE)
     public ResponseEntity<String> removeUser(@RequestParam(value = "id") @PathVariable("id") String id) {

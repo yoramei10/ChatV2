@@ -46,6 +46,12 @@ public class BaseTest {
     String REMOVE_USER_TYPE = "REMOVE_USER";
     String ADD_USER_TYPE = "ADD_USER";
 
+    String NO_VALID_PASSWORD_MESSAGE = "not valid password";
+    String NO_VALID_USERNAME_MESSAGE = "not valid user name";
+    String NO_VALID_NICKNAME_MESSAGE = "not valid nick name";
+    String NO_VALID_NAME_MESSAGE = "not valid name";
+    String FAIL_REMOVE_USER_MESSAGE = "fail remove user. not found";
+
         protected ChatUser buildUser(String userName, String id, String password, String nickName){
 
         ChatUser chatUser = new ChatUser();

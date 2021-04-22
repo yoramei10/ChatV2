@@ -1,0 +1,682 @@
+{
+	"info": {
+		"_postman_id": "4eee70d4-a46f-4fea-9382-59b8a56f46c9",
+		"name": "ChatSherut",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "setup",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"host\", \"localhost\");\r",
+							"pm.environment.set(\"port\", \"8081\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/chatApp/login",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"chatApp",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get Topic",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(responseCode.code === 200){\r",
+							"    let jsonData = JSON.parse(responseBody);\r",
+							"    pm.environment.set(\"userID1\", jsonData.id)\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/chatApp/getTopic",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"chatApp",
+						"getTopic"
+					],
+					"query": [
+						{
+							"key": "nickName",
+							"value": "yye1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create user1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(responseCode.code === 200){\r",
+							"    let jsonData = JSON.parse(responseBody);\r",
+							"    pm.environment.set(\"userID1\", jsonData.id)\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/chatApp/login?userName=yoram123&password=122",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"chatApp",
+						"login"
+					],
+					"query": [
+						{
+							"key": "userName",
+							"value": "yoram123"
+						},
+						{
+							"key": "nickName",
+							"value": "yye1",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "122"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create user1 Copy 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(responseCode.code === 200){\r",
+							"    let jsonData = JSON.parse(responseBody);\r",
+							"    pm.environment.set(\"userID2\", jsonData.id)\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/chatApp/login?userName=yoram&nickName=yye2&password=123",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"chatApp",
+						"login"
+					],
+					"query": [
+						{
+							"key": "userName",
+							"value": "yoram"
+						},
+						{
+							"key": "nickName",
+							"value": "yye2"
+						},
+						{
+							"key": "password",
+							"value": "123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create user1 Copy 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(responseCode.code === 200){\r",
+							"    let jsonData = JSON.parse(responseBody);\r",
+							"    pm.environment.set(\"userID3\", jsonData.id)\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/chatApp/login?userName=yoram5&password=1232",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"chatApp",
+						"login"
+					],
+					"query": [
+						{
+							"key": "userName",
+							"value": "yoram5"
+						},
+						{
+							"key": "nickName",
+							"value": "yye2",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "1232"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create user1 wrong parameters",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(responseCode.code === 200){\r",
+							"    let jsonData = JSON.parse(responseBody);\r",
+							"    pm.environment.set(\"userID3\", jsonData.id)\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/chatApp/login?userName=yoram7&nickName=yye2&password=12",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"chatApp",
+						"login"
+					],
+					"query": [
+						{
+							"key": "userName",
+							"value": "yoram7"
+						},
+						{
+							"key": "nickName",
+							"value": "yye2"
+						},
+						{
+							"key": "password",
+							"value": "12"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create user1 wrong user parames",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"{\r",
+							"    let jsonData = JSON.parse(responseBody);\r",
+							"    pm.environment.set(\"userID1\", jsonData.id)\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/chatApp/login?userName=yo&nickName=yy&password=11",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"chatApp",
+						"login"
+					],
+					"query": [
+						{
+							"key": "userName",
+							"value": "yo"
+						},
+						{
+							"key": "nickName",
+							"value": "yy"
+						},
+						{
+							"key": "password",
+							"value": "11"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "- fail create user already exist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(responseCode.code === 200){\r",
+							"    let jsonData = JSON.parse(responseBody);\r",
+							"    pm.environment.set(\"userID1\", jsonData.id)\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/chatApp/login?userName=yoram123&password=122",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"chatApp",
+						"login"
+					],
+					"query": [
+						{
+							"key": "userName",
+							"value": "yoram123"
+						},
+						{
+							"key": "nickName",
+							"value": "yye1",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "122"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create user2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"{\r",
+							"    let jsonData = JSON.parse(responseBody);\r",
+							"    pm.environment.set(\"userID2\", jsonData.id)\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/chatApp/login?name=yoram2&password=1232",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"chatApp",
+						"login"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "yoram2"
+						},
+						{
+							"key": "nickName",
+							"value": "yye2",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "1232"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all names",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/chatApp/getAllNickNames?id={{userID2}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"chatApp",
+						"getAllNickNames"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{userID2}}"
+						},
+						{
+							"key": "nickName",
+							"value": "yye",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all names - wrong user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/chatApp/getAllNickNames?id=User_yoram1_1",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"chatApp",
+						"getAllNickNames"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "User_yoram1_1"
+						},
+						{
+							"key": "nickName",
+							"value": "yye",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/chatApp/getAllUsers?id=admin",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"chatApp",
+						"getAllUsers"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "admin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all users wrong admin",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/chatApp/getAllUsers?id=admin1",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"chatApp",
+						"getAllUsers"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "admin1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout and remove user",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/chatApp/logout?id={{userID2}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"chatApp",
+						"logout"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{userID2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "publish new message",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":\"{{userID1}}\",\r\n    \"name\": \"{{userID1}}\",\r\n    \"nickName\": \"yy12\",\r\n    \"msgContext\": \"my new message CC\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/chatApp/publishNewMessage?id={{userID1}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"chatApp",
+						"publishNewMessage"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{userID1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get ALL Meessages",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":\"{{userID1}}\",\r\n    \"name\": \"{{userID1}}\",\r\n    \"msgContext\": \"my new message\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/chatApp/getAllMessages?id=User_yoram123_1",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"chatApp",
+						"getAllMessages"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "User_yoram123_1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get ALL Meessages wrong user",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":\"{{userID1}}\",\r\n    \"name\": \"{{userID1}}\",\r\n    \"msgContext\": \"my new message\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/chatApp/getAllMessages?id=user11",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"chatApp",
+						"getAllMessages"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "user11"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

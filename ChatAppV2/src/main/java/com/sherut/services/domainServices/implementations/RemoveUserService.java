@@ -1,15 +1,17 @@
 package com.sherut.services.domainServices.implementations;
 
 
-import com.sherut.exceptions.BadRequestException;
+import com.sherut.exceptions.EntityNotFoundException;
 import com.sherut.models.ResourceModels.ChatUser;
 import com.sherut.services.domainServices.interfaces.IPublishUserService;
 import com.sherut.services.domainServices.interfaces.IRemoveUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class RemoveUserService implements IRemoveUserService {
 
     @Autowired
@@ -29,7 +31,7 @@ public class RemoveUserService implements IRemoveUserService {
             return chatUserToRemove;
 
         } else {
-            throw new BadRequestException("fail remove user");
+            throw new EntityNotFoundException("fail remove user. not found");
         }
     }
 }
