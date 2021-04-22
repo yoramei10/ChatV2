@@ -10,24 +10,24 @@ import org.springframework.util.StringUtils;
 @Service
 public class ValidateUserInputServiceService implements IValidateUserInputService {
 
-    @Autowired
-    private IFactoryDM factoryDM;
+
 
     @Override
-    public IValidateDM validate(String userName, String password) {
-
-        IValidateDM validateDM = factoryDM.getValidateDM();
-        validateDM.setValue(true);
-        validateDM.setValidateMessage("");
+    public IValidateDM validate(String userName, String password, String nickName, IValidateDM validateDM) {
 
         if (!StringUtils.hasText(userName) || userName.length() < 3) {
             validateDM.setValue(false);
-            validateDM.setValidateMessage("not valid userName, ");
+            validateDM.setValidateMessage(validateDM.getValidateMessage() + "not valid user name");
         }
 
         if (!StringUtils.hasText(password) || password.length() < 3) {
             validateDM.setValue(false);
-            validateDM.setValidateMessage(validateDM.getValidateMessage() + "not valid password");
+            validateDM.setValidateMessage(validateDM.getValidateMessage() + ", not valid password");
+        }
+
+        if (StringUtils.hasText(nickName) && nickName.length() < 3) {
+            validateDM.setValue(false);
+            validateDM.setValidateMessage(validateDM.getValidateMessage() + ", not valid nick name");
         }
         return validateDM;
     }

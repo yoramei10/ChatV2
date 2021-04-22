@@ -6,10 +6,11 @@ import com.sherut.services.applicationServices.interfaces.IGetAllUsersApplicatio
 import com.sherut.services.domainServices.interfaces.IGetAllUsersService;
 import com.sherut.services.domainServices.interfaces.IValidateAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
+@Service
 public class GetAllUsersApplicationService implements IGetAllUsersApplicationService {
 
     @Autowired

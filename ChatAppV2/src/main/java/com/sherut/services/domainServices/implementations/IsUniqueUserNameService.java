@@ -2,15 +2,15 @@ package com.sherut.services.domainServices.implementations;
 
 
 import com.sherut.models.ResourceModels.ChatUser;
-import com.sherut.services.domainServices.interfaces.IValidateNewUserService;
+import com.sherut.services.domainServices.interfaces.IIsUniqueService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class ValidateNewUserService implements IValidateNewUserService {
+@Service("IsUniqueUserName")
+public class IsUniqueUserNameService implements IIsUniqueService {
 
-    public boolean checkNewUser(List<ChatUser> allUsers, String userName) {
+    public boolean isUnique(List<ChatUser> allUsers, String userName) {
 
         return !allUsers
                 .stream()
