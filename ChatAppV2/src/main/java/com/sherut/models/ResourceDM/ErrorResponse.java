@@ -1,4 +1,4 @@
-package com.sherut.models.ResourceModels;
+package com.sherut.models.ResourceDM;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

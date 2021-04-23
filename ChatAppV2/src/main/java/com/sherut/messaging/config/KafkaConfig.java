@@ -4,7 +4,7 @@ import com.sherut.messaging.implementations.ListenerMessageService;
 import com.sherut.messaging.implementations.PublishMessageService;
 import com.sherut.messaging.interfaces.IListenerMessageService;
 import com.sherut.messaging.interfaces.IPublishMessageService;
-import com.sherut.models.ResourceModels.AppMessage;
+import com.sherut.models.ResourceDM.AppMessage;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;

@@ -1,7 +1,7 @@
 package com.sherut.messaging.implementations;
 
 import com.sherut.messaging.interfaces.IListenerMessageService;
-import com.sherut.models.ResourceModels.AppMessage;
+import com.sherut.models.ResourceDM.AppMessage;
 import com.sherut.services.domainServices.interfaces.IConsumeHandlerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

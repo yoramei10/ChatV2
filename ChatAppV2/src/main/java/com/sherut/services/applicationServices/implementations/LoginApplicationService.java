@@ -1,15 +1,16 @@
 package com.sherut.services.applicationServices.implementations;
 
-import com.sherut.config.IFactoryDM;
+import com.sherut.models.DTO.interfaces.IFactoryDTO;
 import com.sherut.exceptions.BadRequestException;
-import com.sherut.models.DModels.interfaces.IValidateDM;
-import com.sherut.models.ResourceModels.ChatUser;
+import com.sherut.models.DM.interfaces.IValidateDM;
+import com.sherut.models.ResourceDM.ChatUser;
 import com.sherut.services.applicationServices.interfaces.ILoginApplicationService;
 import com.sherut.config.ConfigurationVariablesApp;
 import com.sherut.services.domainServices.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -26,7 +27,7 @@ public class LoginApplicationService implements ILoginApplicationService {
     @Autowired
     private IAddUserToListService adUserService;
     @Autowired
-    private IFactoryDM factoryDM;
+    private IFactoryDTO factoryDM;
     @Autowired
     private IValidateUniqueUserService validateUniqueUserService;
 
@@ -34,33 +35,29 @@ public class LoginApplicationService implements ILoginApplicationService {
     AtomicInteger id = new AtomicInteger();
     String USER_PREF = ConfigurationVariablesApp.userPref;
 
-    public ChatUser loginApp (String userName, String password, String nickName) {
+    public ChatUser loginApp (ChatUser user) {
 
-        IValidateDM validateDM = factoryDM.getValidateDM();
+        IValidateDM validateDM = factoryDM.getValidateDTO();
         validateDM.setValue(true);
         validateDM.setValidateMessage("");
 
-        validateDM = validateUserInputService.validate(userName, password, nickName, validateDM);
+        validateDM = validateUserInputService.validate(user, validateDM);
         if (!validateDM.getValue()) {
             throw new BadRequestException(validateDM.getValidateMessage());
         }
 
-        validateDM = validateUniqueUserService.validate(userName, nickName, getAllUsersService.getAllUsers(), validateDM);
+        validateDM = validateUniqueUserService.validate(user, getAllUsersService.getAllUsers(), validateDM);
         if (!validateDM.getValue()) {
             throw new BadRequestException(validateDM.getValidateMessage());
         } else {
 
-            ChatUser user = new ChatUser();
-            user.setName(userName);
-            user.setId(USER_PREF + userName + "_" + id.incrementAndGet());
-            user.setPassword(password);
-
-            if (null == nickName || nickName.length() == 0) {
-                user.setNickName(userName);
+            if (StringUtils.hasText(user.getNickName())) {
+                user.setNickName(user.getNickName());
             } else {
-                user.setNickName(nickName);
+                user.setNickName(user.getName());
             }
 
+            user.setId(USER_PREF + user.getName() + "_" + id.incrementAndGet());
             adUserService.addUser(user);
 
             publishNewUserService.publish(user);

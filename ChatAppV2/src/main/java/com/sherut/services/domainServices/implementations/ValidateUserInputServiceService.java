@@ -1,9 +1,8 @@
 package com.sherut.services.domainServices.implementations;
 
-import com.sherut.config.IFactoryDM;
-import com.sherut.models.DModels.interfaces.IValidateDM;
+import com.sherut.models.DM.interfaces.IValidateDM;
+import com.sherut.models.ResourceDM.ChatUser;
 import com.sherut.services.domainServices.interfaces.IValidateUserInputService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -13,7 +12,11 @@ public class ValidateUserInputServiceService implements IValidateUserInputServic
 
 
     @Override
-    public IValidateDM validate(String userName, String password, String nickName, IValidateDM validateDM) {
+    public IValidateDM validate(ChatUser chatUser, IValidateDM validateDM) {
+
+        String userName = chatUser.getName();
+        String password = chatUser.getPassword();
+        String nickName  = chatUser.getNickName();
 
         if (!StringUtils.hasText(userName) || userName.length() < 3) {
             validateDM.setValue(false);

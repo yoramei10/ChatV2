@@ -1,10 +1,8 @@
 package com.sherut.services.applicationServices.interfaces;
 
-import com.sherut.models.ResourceModels.ChatUser;
-
-import java.util.List;
+import com.sherut.models.ResourceDM.ChatUser;
 
 public interface ILoginApplicationService {
 
-    public ChatUser loginApp ( String userName, String password, String nickName);
+    public ChatUser loginApp (ChatUser chatUser);
 }

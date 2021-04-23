@@ -1,6 +1,6 @@
-package com.sherut.models.DModels.implementations;
+package com.sherut.models.DM.implementations;
 
-import com.sherut.models.DModels.interfaces.IValidateDM;
+import com.sherut.models.DM.interfaces.IValidateDM;
 import lombok.Getter;
 import lombok.Setter;
 

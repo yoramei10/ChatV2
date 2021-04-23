@@ -1,6 +1,6 @@
-package com.sherut.models.DModels.interfaces;
+package com.sherut.models.DTO.interfaces;
 
-public interface IChatUserDM {
+public interface IChatUserDTO {
 
     String getId();
     void setId(String id);

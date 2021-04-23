@@ -1,7 +1,7 @@
 package com.sherut.services.applicationServices.implementations;
 
 import com.sherut.exceptions.BadRequestException;
-import com.sherut.models.ResourceModels.ChatUser;
+import com.sherut.models.ResourceDM.ChatUser;
 import com.sherut.services.applicationServices.interfaces.IGetAllUsersApplicationService;
 import com.sherut.services.domainServices.interfaces.IGetAllUsersService;
 import com.sherut.services.domainServices.interfaces.IValidateAdminService;

@@ -1,10 +1,9 @@
 package com.sherut.apiTests;
 
 import com.sherut.exceptions.BadRequestException;
-import com.sherut.models.ResourceModels.ChatUser;
+import com.sherut.models.ResourceDM.ChatUser;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;

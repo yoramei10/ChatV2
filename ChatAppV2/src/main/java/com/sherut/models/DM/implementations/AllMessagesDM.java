@@ -1,7 +1,7 @@
-package com.sherut.models.DModels.implementations;
+package com.sherut.models.DM.implementations;
 
-import com.sherut.models.DModels.interfaces.IAllMessagesDM;
-import com.sherut.models.ResourceModels.AppMessage;
+import com.sherut.models.DM.interfaces.IAllMessagesDM;
+import com.sherut.models.ResourceDM.AppMessage;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 

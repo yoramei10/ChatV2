@@ -2,7 +2,7 @@ package com.sherut.apiTests;
 
 import com.sherut.api.RestControllerApp;
 import com.sherut.exceptions.BadRequestException;
-import com.sherut.models.ResourceModels.AppMessage;
+import com.sherut.models.ResourceDM.AppMessage;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;

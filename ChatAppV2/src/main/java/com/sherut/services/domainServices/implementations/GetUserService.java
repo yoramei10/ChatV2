@@ -1,7 +1,7 @@
 package com.sherut.services.domainServices.implementations;
 
 
-import com.sherut.models.ResourceModels.ChatUser;
+import com.sherut.models.ResourceDM.ChatUser;
 import com.sherut.services.domainServices.interfaces.IGetUserService;
 import org.springframework.stereotype.Service;
 
