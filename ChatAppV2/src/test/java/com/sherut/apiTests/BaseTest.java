@@ -50,6 +50,8 @@ public class BaseTest {
     String NO_VALID_USERNAME_MESSAGE = "not valid user name";
     String NO_VALID_NICKNAME_MESSAGE = "not valid nick name";
     String NO_VALID_NAME_MESSAGE = "not valid name";
+    String USER_NAME_ALREADY_EXIST_MESSAGE = "user name already exist";
+    String NICK_NAME_ALREADY_EXIST_MESSAGE = "nick name already exist";
     String FAIL_REMOVE_USER_MESSAGE = "fail remove user. not found";
 
         protected ChatUser buildUser(String userName, String id, String password, String nickName){
