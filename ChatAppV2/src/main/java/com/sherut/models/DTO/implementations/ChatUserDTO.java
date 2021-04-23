@@ -1,10 +1,10 @@
-package com.sherut.models.DModels.implementations;
+package com.sherut.models.DTO.implementations;
 
-import com.sherut.models.DModels.interfaces.IChatUserDM;
+import com.sherut.models.DTO.interfaces.IChatUserDTO;
 import lombok.Getter;
 import lombok.Setter;
 
-public class ChatUserDM implements IChatUserDM {
+public class ChatUserDTO implements IChatUserDTO {
 
     @Getter @Setter
     String id ;

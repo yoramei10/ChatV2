@@ -1,8 +1,8 @@
 package com.sherut.apiTests;
 
 import com.sherut.messaging.interfaces.IListenerMessageService;
-import com.sherut.models.ResourceModels.AppMessage;
-import com.sherut.models.ResourceModels.ChatUser;
+import com.sherut.models.ResourceDM.AppMessage;
+import com.sherut.models.ResourceDM.ChatUser;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;

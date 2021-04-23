@@ -1,7 +1,7 @@
 package com.sherut.messaging.implementations;
 
 import com.sherut.messaging.interfaces.IPublishMessageService;
-import com.sherut.models.ResourceModels.AppMessage;
+import com.sherut.models.ResourceDM.AppMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;

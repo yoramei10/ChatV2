@@ -1,17 +1,11 @@
 package com.sherut.apiTests;
 
 import com.sherut.api.RestControllerApp;
-import com.sherut.exceptions.BadRequestException;
-import com.sherut.models.ResourceModels.ChatUser;
-import com.sherut.models.ResourceModels.TopicParams;
+import com.sherut.models.ResourceDM.TopicParams;
 import org.junit.Assert;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.util.ReflectionTestUtils;
-
-import java.util.List;
 
 public class GetTopicTest extends BaseTest{
 

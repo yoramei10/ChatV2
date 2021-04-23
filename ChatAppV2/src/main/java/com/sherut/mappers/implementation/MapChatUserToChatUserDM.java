@@ -1,9 +1,9 @@
 package com.sherut.mappers.implementation;
 
 import com.sherut.mappers.interfaces.IMapChatUserToChatUserDM;
-import com.sherut.models.ResourceModels.ChatUser;
-import com.sherut.models.DModels.interfaces.IChatUserDM;
-import com.sherut.config.IFactoryDM;
+import com.sherut.models.ResourceDM.ChatUser;
+import com.sherut.models.DTO.interfaces.IChatUserDTO;
+import com.sherut.models.DTO.interfaces.IFactoryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -13,14 +13,14 @@ import java.util.stream.Collectors;
 public class MapChatUserToChatUserDM implements IMapChatUserToChatUserDM {
 
     @Autowired
-    private IFactoryDM factoryDM;
+    private IFactoryDTO factoryDM;
 
     @Override
-    public IChatUserDM map(ChatUser chatUser) {
+    public IChatUserDTO map(ChatUser chatUser) {
         if (null == chatUser)
             return null;
 
-        IChatUserDM chatUserDM = factoryDM.getChatUserDM();
+        IChatUserDTO chatUserDM = factoryDM.getChatUserDTO();
         chatUserDM.setId(chatUser.getId());
         chatUserDM.setName(chatUser.getName());
         chatUserDM.setPassword(chatUser.getPassword());
@@ -29,7 +29,7 @@ public class MapChatUserToChatUserDM implements IMapChatUserToChatUserDM {
     }
 
     @Override
-    public ChatUser map(IChatUserDM chatUserDM) {
+    public ChatUser map(IChatUserDTO chatUserDM) {
 
         if (null == chatUserDM)
             return null;
@@ -43,7 +43,7 @@ public class MapChatUserToChatUserDM implements IMapChatUserToChatUserDM {
     }
 
     @Override
-    public List<IChatUserDM> mapList(List<ChatUser> chatUsers) {
+    public List<IChatUserDTO> mapList(List<ChatUser> chatUsers) {
 
         return chatUsers.stream()
                 .filter(Objects::nonNull)
@@ -52,7 +52,7 @@ public class MapChatUserToChatUserDM implements IMapChatUserToChatUserDM {
     }
 
     @Override
-    public List<ChatUser> map(List<IChatUserDM> chatUserDMs) {
+    public List<ChatUser> map(List<IChatUserDTO> chatUserDMs) {
 
         return chatUserDMs.stream()
                 .filter(Objects::nonNull)

@@ -1,6 +1,6 @@
 package com.sherut.exceptions;
 
-import com.sherut.models.ResourceModels.ErrorResponse;
+import com.sherut.models.ResourceDM.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

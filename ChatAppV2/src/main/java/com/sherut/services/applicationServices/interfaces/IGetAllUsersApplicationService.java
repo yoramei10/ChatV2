@@ -1,6 +1,6 @@
 package com.sherut.services.applicationServices.interfaces;
 
-import com.sherut.models.ResourceModels.ChatUser;
+import com.sherut.models.ResourceDM.ChatUser;
 
 import java.util.List;
 

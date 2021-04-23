@@ -1,9 +1,8 @@
 package com.sherut.services.applicationServices.implementations;
 
 import com.sherut.exceptions.BadRequestException;
-import com.sherut.models.DModels.interfaces.IAllMessagesDM;
-import com.sherut.models.ResourceModels.AppMessage;
-import com.sherut.models.ResourceModels.ChatUser;
+import com.sherut.models.DM.interfaces.IAllMessagesDM;
+import com.sherut.models.ResourceDM.AppMessage;
 import com.sherut.services.applicationServices.interfaces.IGetAllMessagesApplicationService;
 import com.sherut.services.domainServices.interfaces.IGetAllUsersService;
 import com.sherut.services.domainServices.interfaces.IValidateExistUserByIDService;

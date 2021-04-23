@@ -1,8 +1,8 @@
 package com.sherut.mappers.implementation;
 
 import com.sherut.mappers.interfaces.IMapAppMessageToMessagingAppMessage;
-import com.sherut.models.ResourceModels.AppMessage;
-import com.sherut.models.ResourceModels.MessageAppMessage;
+import com.sherut.models.ResourceDM.AppMessage;
+import com.sherut.models.ResourceDM.MessageAppMessage;
 
 public class MapAppMessageToMessagingAppMessage implements IMapAppMessageToMessagingAppMessage {
 

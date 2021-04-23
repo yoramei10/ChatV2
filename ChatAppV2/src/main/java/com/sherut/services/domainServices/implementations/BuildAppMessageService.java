@@ -1,7 +1,7 @@
 package com.sherut.services.domainServices.implementations;
 
-import com.sherut.models.ResourceModels.AppMessage;
-import com.sherut.models.ResourceModels.ChatUser;
+import com.sherut.models.ResourceDM.AppMessage;
+import com.sherut.models.ResourceDM.ChatUser;
 import com.sherut.models.enums.AppMessageTypeENUM;
 import com.sherut.services.domainServices.interfaces.IBuildAppMessageService;
 import org.springframework.beans.factory.annotation.Value;

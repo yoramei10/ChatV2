@@ -1,9 +1,7 @@
 package com.sherut.services.applicationServices.implementations;
 
-import com.sherut.config.ConfigurationVariablesApp;
 import com.sherut.exceptions.BadRequestException;
-import com.sherut.models.ResourceModels.AppMessage;
-import com.sherut.models.ResourceModels.ChatUser;
+import com.sherut.models.ResourceDM.AppMessage;
 import com.sherut.models.enums.AppMessageTypeENUM;
 import com.sherut.services.applicationServices.interfaces.IPublishMessageApplicationService;
 import com.sherut.messaging.interfaces.IPublishMessageService;
@@ -12,8 +10,6 @@ import com.sherut.services.domainServices.interfaces.IValidateExistUserByIDServi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class PublishMessageApplicationService implements IPublishMessageApplicationService {

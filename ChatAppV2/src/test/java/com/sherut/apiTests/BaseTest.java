@@ -2,9 +2,9 @@ package com.sherut.apiTests;
 
 import com.sherut.api.RestControllerApp;
 import com.sherut.messaging.interfaces.IPublishMessageService;
-import com.sherut.models.DModels.interfaces.IAllUserDM;
-import com.sherut.models.ResourceModels.AppMessage;
-import com.sherut.models.ResourceModels.ChatUser;
+import com.sherut.models.DM.interfaces.IAllUserDM;
+import com.sherut.models.ResourceDM.AppMessage;
+import com.sherut.models.ResourceDM.ChatUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -30,12 +30,12 @@ public class BaseTest {
 
     String USER_NAME1 = "user1";
     String USER_ID1 = PREF+USER_NAME1+"_1";
-    String PASSWORD1 = "user1";
+    String PASSWORD1 = "pass1";
     String NICKNAME1 = "nickName1";
 
     String USER_NAME2 = "user2";
     String USER_ID2 = PREF+USER_NAME2+"_2";
-    String PASSWORD2 = "user2";
+    String PASSWORD2 = "pass1";
     String NICKNAME2 = "nickName2";
 
     String ADMIN = "admin";

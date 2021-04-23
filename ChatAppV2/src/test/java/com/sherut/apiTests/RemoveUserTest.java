@@ -1,7 +1,7 @@
 package com.sherut.apiTests;
 
 import com.sherut.exceptions.EntityNotFoundException;
-import com.sherut.models.ResourceModels.AppMessage;
+import com.sherut.models.ResourceDM.AppMessage;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;

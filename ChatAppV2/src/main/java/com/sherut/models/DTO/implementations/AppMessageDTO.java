@@ -1,10 +1,10 @@
-package com.sherut.models.DModels.implementations;
+package com.sherut.models.DTO.implementations;
 
-import com.sherut.models.DModels.interfaces.IAppMessageDM;
+import com.sherut.models.DTO.interfaces.IAppMessageDTO;
 import lombok.Getter;
 import lombok.Setter;
 
-public class AppMessageDM implements IAppMessageDM {
+public class AppMessageDTO implements IAppMessageDTO {
 
     @Getter @Setter
     String id;
