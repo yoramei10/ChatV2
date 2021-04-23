@@ -29,17 +29,17 @@ public class ValidateUniqueNewUserService implements IValidateUniqueUserService 
 
         if(!isUniqueUserNameService.isUnique(allUsers, userName)){
             validateDM.setValue(false);
-            validateDM.setValidateMessage(validateDM.getValidateMessage() + " not valid user name");
+            validateDM.setValidateMessage(validateDM.getValidateMessage() + " user name already exist");
         }
         if (StringUtils.hasText(nickName)){
             if(!isUniqueNickNameService.isUnique(allUsers, nickName)){
                 validateDM.setValue(false);
-                validateDM.setValidateMessage(validateDM.getValidateMessage() + " not valid nick name");
+                validateDM.setValidateMessage(validateDM.getValidateMessage() + " nick name already exist");
             }
         }else{
             if(!isUniqueNickNameService.isUnique(allUsers, userName)){
                 validateDM.setValue(false);
-                validateDM.setValidateMessage(validateDM.getValidateMessage() + " not valid name");
+                validateDM.setValidateMessage(validateDM.getValidateMessage() + " name already exist");
             }
         }
 

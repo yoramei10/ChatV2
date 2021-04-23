@@ -115,7 +115,10 @@ public class LoginTest extends BaseTest {
             restControllerApp.login(user);
             Assert.fail();
         }catch (BadRequestException ex){
-            Assert.assertTrue(ex.getMessage().contains(NO_VALID_USERNAME_MESSAGE));
+            Assert.assertTrue("expected: "+ USER_NAME_ALREADY_EXIST_MESSAGE + ", get: " + ex.getMessage(),
+                    ex.getMessage().contains(USER_NAME_ALREADY_EXIST_MESSAGE));
+            Assert.assertTrue("expected: "+ NICK_NAME_ALREADY_EXIST_MESSAGE + ", get: " + ex.getMessage(),
+                    ex.getMessage().contains(NICK_NAME_ALREADY_EXIST_MESSAGE));
         }
     }
 
