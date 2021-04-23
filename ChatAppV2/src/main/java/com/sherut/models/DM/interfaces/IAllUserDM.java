@@ -1,6 +1,6 @@
-package com.sherut.models.DModels.interfaces;
+package com.sherut.models.DM.interfaces;
 
-import com.sherut.models.ResourceModels.ChatUser;
+import com.sherut.models.ResourceDM.ChatUser;
 
 import java.util.List;
 

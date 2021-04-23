@@ -2,9 +2,9 @@ package com.sherut.apiTests;
 
 import com.sherut.api.RestControllerApp;
 import com.sherut.messaging.interfaces.IPublishMessageService;
-import com.sherut.models.DModels.interfaces.IAllUserDM;
-import com.sherut.models.ResourceModels.AppMessage;
-import com.sherut.models.ResourceModels.ChatUser;
+import com.sherut.models.DM.interfaces.IAllUserDM;
+import com.sherut.models.ResourceDM.AppMessage;
+import com.sherut.models.ResourceDM.ChatUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -30,12 +30,12 @@ public class BaseTest {
 
     String USER_NAME1 = "user1";
     String USER_ID1 = PREF+USER_NAME1+"_1";
-    String PASSWORD1 = "user1";
+    String PASSWORD1 = "pass1";
     String NICKNAME1 = "nickName1";
 
     String USER_NAME2 = "user2";
     String USER_ID2 = PREF+USER_NAME2+"_2";
-    String PASSWORD2 = "user2";
+    String PASSWORD2 = "pass1";
     String NICKNAME2 = "nickName2";
 
     String ADMIN = "admin";
@@ -50,6 +50,8 @@ public class BaseTest {
     String NO_VALID_USERNAME_MESSAGE = "not valid user name";
     String NO_VALID_NICKNAME_MESSAGE = "not valid nick name";
     String NO_VALID_NAME_MESSAGE = "not valid name";
+    String USER_NAME_ALREADY_EXIST_MESSAGE = "user name already exist";
+    String NICK_NAME_ALREADY_EXIST_MESSAGE = "nick name already exist";
     String FAIL_REMOVE_USER_MESSAGE = "fail remove user. not found";
 
         protected ChatUser buildUser(String userName, String id, String password, String nickName){

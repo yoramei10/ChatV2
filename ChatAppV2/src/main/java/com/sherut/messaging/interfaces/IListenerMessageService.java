@@ -1,7 +1,6 @@
 package com.sherut.messaging.interfaces;
 
-import com.sherut.models.ResourceModels.AppMessage;
-import org.springframework.kafka.annotation.KafkaListener;
+import com.sherut.models.ResourceDM.AppMessage;
 
 public interface IListenerMessageService {
 

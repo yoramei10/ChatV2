@@ -1,15 +1,15 @@
 package com.sherut.mappers.interfaces;
 
-import com.sherut.models.ResourceModels.ChatUser;
-import com.sherut.models.DModels.interfaces.IChatUserDM;
+import com.sherut.models.ResourceDM.ChatUser;
+import com.sherut.models.DTO.interfaces.IChatUserDTO;
 
 import java.util.List;
 
 public interface IMapChatUserToChatUserDM {
 
-    IChatUserDM map(ChatUser chatUser);
-    ChatUser map(IChatUserDM chatUserDM);
+    IChatUserDTO map(ChatUser chatUser);
+    ChatUser map(IChatUserDTO chatUserDM);
 
-    List<IChatUserDM> mapList(List<ChatUser> chatUsers);
-    List<ChatUser> map(List<IChatUserDM> chatUserDMs);
+    List<IChatUserDTO> mapList(List<ChatUser> chatUsers);
+    List<ChatUser> map(List<IChatUserDTO> chatUserDMs);
 }

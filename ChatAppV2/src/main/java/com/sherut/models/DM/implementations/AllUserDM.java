@@ -1,7 +1,7 @@
-package com.sherut.models.DModels.implementations;
+package com.sherut.models.DM.implementations;
 
-import com.sherut.models.DModels.interfaces.IAllUserDM;
-import com.sherut.models.ResourceModels.ChatUser;
+import com.sherut.models.DM.interfaces.IAllUserDM;
+import com.sherut.models.ResourceDM.ChatUser;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 

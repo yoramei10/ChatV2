@@ -2,8 +2,8 @@ package com.sherut.apiTests;
 
 import com.sherut.api.RestControllerApp;
 import com.sherut.exceptions.BadRequestException;
-import com.sherut.models.ResourceModels.AppMessage;
-import com.sherut.models.ResourceModels.ChatUser;
+import com.sherut.models.ResourceDM.AppMessage;
+import com.sherut.models.ResourceDM.ChatUser;
 import com.sherut.services.domainServices.implementations.BuildAppMessageService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,9 +28,17 @@ public class LoginTest extends BaseTest {
     @Autowired
     private BuildAppMessageService buildAppMessageService;
 
+    ChatUser user;
+
 
     @BeforeEach
     public void init(){
+
+        user = new ChatUser();
+        user.setName(USER_NAME1);
+        user.setNickName(NICKNAME1);
+        user.setPassword(PASSWORD1);
+
         ReflectionTestUtils.setField(allUsers, "allUsers", new ArrayList<>());
         try {
             Thread.sleep(10);
@@ -47,7 +55,7 @@ public class LoginTest extends BaseTest {
     @Test
     public void loginNewUser_Success(){
 
-        ResponseEntity<ChatUser> user1 = restControllerApp.login(USER_NAME1, USER_NAME1, NICKNAME1);
+        ResponseEntity<ChatUser> user1 = restControllerApp.login(user);
 
         ArgumentCaptor<AppMessage> argumentCaptor = ArgumentCaptor.forClass(AppMessage.class);
 
@@ -71,7 +79,7 @@ public class LoginTest extends BaseTest {
 
         ReflectionTestUtils.setField(buildAppMessageService, "MASK_ID_NAME", false);
 
-        restControllerApp.login(USER_NAME1, USER_NAME1, NICKNAME1);
+        restControllerApp.login(user);
 
         ArgumentCaptor<AppMessage> argumentCaptor = ArgumentCaptor.forClass(AppMessage.class);
 
@@ -88,7 +96,8 @@ public class LoginTest extends BaseTest {
     @Test
     public void loginNewUser_noNickName_Success(){
 
-        ResponseEntity<ChatUser> user1 = restControllerApp.login(USER_NAME1, USER_NAME1, null);
+        user.setNickName(null);
+        ResponseEntity<ChatUser> user1 = restControllerApp.login(user);
 
         verify(publishMessageMock, times(1)).publish(any());
 
@@ -102,22 +111,24 @@ public class LoginTest extends BaseTest {
     public void loginExistUser_fail() {
 
         try {
-            restControllerApp.login(USER_NAME1, USER_NAME1, null);
-            restControllerApp.login(USER_NAME1, USER_NAME1, null);
+            restControllerApp.login(user);
+            restControllerApp.login(user);
             Assert.fail();
         }catch (BadRequestException ex){
-            Assert.assertTrue(ex.getMessage().contains(NO_VALID_USERNAME_MESSAGE));
+            Assert.assertTrue("expected: "+ USER_NAME_ALREADY_EXIST_MESSAGE + ", get: " + ex.getMessage(),
+                    ex.getMessage().contains(USER_NAME_ALREADY_EXIST_MESSAGE));
+            Assert.assertTrue("expected: "+ NICK_NAME_ALREADY_EXIST_MESSAGE + ", get: " + ex.getMessage(),
+                    ex.getMessage().contains(NICK_NAME_ALREADY_EXIST_MESSAGE));
         }
     }
 
         @Test
         public void loginUser_shortUserName_fail(){
 
-            String USER_NAME = "us";
-            String PASSWORD = "user1";
+            user.setName("us");
 
             try{
-                restControllerApp.login(USER_NAME, PASSWORD, null);
+                restControllerApp.login(user);
                 Assert.fail();
             }catch (BadRequestException ex){
                 Assert.assertTrue("not valid userName, ", ex.getMessage().contains(NO_VALID_USERNAME_MESSAGE));
@@ -127,9 +138,9 @@ public class LoginTest extends BaseTest {
     @Test
     public void loginUser_shortPassword_fail(){
 
-        String PASSWORD = "12";
+        user.setPassword("12");
         try{
-            restControllerApp.login(USER_NAME1, PASSWORD, null);
+            restControllerApp.login(user);
             Assert.fail();
         }catch (BadRequestException ex){
             Assert.assertTrue(ex.getMessage().contains(NO_VALID_PASSWORD_MESSAGE));
@@ -139,10 +150,10 @@ public class LoginTest extends BaseTest {
     @Test
     public void loginUser_shortUserNameShortPassword_fail(){
 
-        String USER_NAME = "us";
-        String PASSWORD = "12";
+        user.setName("us");
+        user.setPassword("12");
         try{
-            restControllerApp.login(USER_NAME, PASSWORD, null);
+            restControllerApp.login(user);
             Assert.fail();
         }catch (BadRequestException ex){
             Assert.assertTrue(ex.getMessage().contains(NO_VALID_USERNAME_MESSAGE));

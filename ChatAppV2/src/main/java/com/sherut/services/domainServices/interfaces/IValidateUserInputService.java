@@ -1,8 +1,9 @@
 package com.sherut.services.domainServices.interfaces;
 
-import com.sherut.models.DModels.interfaces.IValidateDM;
+import com.sherut.models.DM.interfaces.IValidateDM;
+import com.sherut.models.ResourceDM.ChatUser;
 
 public interface IValidateUserInputService {
 
-    IValidateDM validate (String userName, String password, String nickName, IValidateDM validateDM);
+    IValidateDM validate (ChatUser chatUser, IValidateDM validateDM);
 }

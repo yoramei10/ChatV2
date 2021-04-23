@@ -1,10 +1,10 @@
 package com.sherut.mappers.interfaces;
 
-import com.sherut.models.ResourceModels.AppMessage;
-import com.sherut.models.DModels.interfaces.IAppMessageDM;
+import com.sherut.models.ResourceDM.AppMessage;
+import com.sherut.models.DTO.interfaces.IAppMessageDTO;
 
 public interface IMapAppMessage {
 
-    IAppMessageDM map (AppMessage appMessage);
-    AppMessage map (IAppMessageDM appMessageDM);
+    IAppMessageDTO map (AppMessage appMessage);
+    AppMessage map (IAppMessageDTO appMessageDM);
 }

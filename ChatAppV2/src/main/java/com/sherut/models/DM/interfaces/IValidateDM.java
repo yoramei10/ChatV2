@@ -1,4 +1,4 @@
-package com.sherut.models.DModels.interfaces;
+package com.sherut.models.DM.interfaces;
 
 public interface IValidateDM {
 
