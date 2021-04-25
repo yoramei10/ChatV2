@@ -21,7 +21,7 @@ public class RemoveUserTest extends BaseTest{
     @BeforeEach
     public void init(){
 
-        ReflectionTestUtils.setField(allUsers, "allUsers", buildAllUsers());
+//        ReflectionTestUtils.setField(allUsers, "allUsers", buildAllUsers());
         try {
             Thread.sleep(10);
         } catch (InterruptedException e) {
@@ -30,16 +30,16 @@ public class RemoveUserTest extends BaseTest{
     }
 
     @After
-    public void afterTests(){
-        ReflectionTestUtils.setField(allUsers, "allUsers", new ArrayList<>());
-    }
+//    public void afterTests(){
+//        ReflectionTestUtils.setField(allUsers, "allUsers", new ArrayList<>());
+//    }
 
     @Test
     public void removeUser_Success(){
 
         ArgumentCaptor<AppMessage> argumentCaptor = ArgumentCaptor.forClass(AppMessage.class);
 
-        ResponseEntity<String> response = restControllerApp.removeUser(USER_ID1);
+        ResponseEntity<String> response = restControllerApp.logOut(USER_ID1);
 
         verify(publishMessageMock, times(1)).publish(argumentCaptor.capture());
 
@@ -51,7 +51,7 @@ public class RemoveUserTest extends BaseTest{
     public void removeUser_wrongUser_fail(){
 
         try {
-            restControllerApp.removeUser("wrong user");
+            restControllerApp.logOut("wrong user");
             Assert.fail();
         }catch (EntityNotFoundException ex){
             Assert.assertEquals(FAIL_REMOVE_USER_MESSAGE, ex.getMessage());

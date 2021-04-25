@@ -1,28 +1,30 @@
 package com.sherut.mappers.implementation;
 
-import com.sherut.mappers.interfaces.IMapChatUserToChatUserDM;
+import com.sherut.mappers.interfaces.IMapChatUser;
+import com.sherut.models.DTO.implementations.ChatUserDTO;
 import com.sherut.models.ResourceDM.ChatUser;
 import com.sherut.models.DTO.interfaces.IChatUserDTO;
-import com.sherut.models.DTO.interfaces.IFactoryDTO;
+import com.sherut.models.DTO.interfaces.IFactoryDM;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class MapChatUserToChatUserDM implements IMapChatUserToChatUserDM {
+@Service
+public class MapChatUser implements IMapChatUser {
 
     @Autowired
-    private IFactoryDTO factoryDM;
+    private IFactoryDM factoryDM;
 
     @Override
     public IChatUserDTO map(ChatUser chatUser) {
         if (null == chatUser)
             return null;
 
-        IChatUserDTO chatUserDM = factoryDM.getChatUserDTO();
-        chatUserDM.setId(chatUser.getId());
-        chatUserDM.setName(chatUser.getName());
+        IChatUserDTO chatUserDM = new ChatUserDTO(chatUser.getName());
         chatUserDM.setPassword(chatUser.getPassword());
         chatUserDM.setNickName(chatUser.getNickName());
         return chatUserDM;
@@ -36,7 +38,7 @@ public class MapChatUserToChatUserDM implements IMapChatUserToChatUserDM {
 
         ChatUser chatUser = new ChatUser();
         chatUser.setId(chatUserDM.getId());
-        chatUser.setName(chatUserDM.getName());
+        chatUser.setName(chatUserDM.getUserName());
         chatUser.setPassword(chatUserDM.getPassword());
         chatUser.setNickName(chatUserDM.getNickName());
         return chatUser;

@@ -1,11 +1,15 @@
 package com.sherut.services.applicationServices.implementations;
 
-import com.sherut.models.DTO.interfaces.IFactoryDTO;
+import com.sherut.mappers.interfaces.IMapChatUser;
+import com.sherut.models.DTO.interfaces.IAppMessageDTO;
+import com.sherut.models.DTO.interfaces.IChatUserDTO;
+import com.sherut.models.DTO.interfaces.IFactoryDM;
 import com.sherut.exceptions.BadRequestException;
 import com.sherut.models.DM.interfaces.IValidateDM;
 import com.sherut.models.ResourceDM.ChatUser;
+import com.sherut.repository.interfaces.IMessageRepository;
+import com.sherut.repository.interfaces.IUserRepository;
 import com.sherut.services.applicationServices.interfaces.ILoginApplicationService;
-import com.sherut.config.ConfigurationVariablesApp;
 import com.sherut.services.domainServices.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,49 +24,59 @@ public class LoginApplicationService implements ILoginApplicationService {
     @Autowired
     private IValidateUserInputService validateUserInputService;
     @Autowired
-    @Qualifier("publishNewUserService")
-    private IPublishUserService publishNewUserService;
+    private IPublishMessageService publishMessageService;
     @Autowired
-    private IGetAllUsersService getAllUsersService;
-    @Autowired
-    private IAddUserToListService adUserService;
-    @Autowired
-    private IFactoryDTO factoryDM;
+    private IFactoryDM factoryDM;
     @Autowired
     private IValidateUniqueUserService validateUniqueUserService;
+    @Autowired
+    private IUserRepository userRepositoryService;
+    @Autowired
+    private IMapChatUser mapChatUser;
+    @Autowired
+    private IMessageRepository messageRepository;
+    @Autowired
+    @Qualifier("addNewUserMessageToDB")
+    private IAddMessageTODBService addNewUserMessageTODBService;
+
+
 
 
     AtomicInteger id = new AtomicInteger();
-    String USER_PREF = ConfigurationVariablesApp.userPref;
 
     public ChatUser loginApp (ChatUser user) {
 
-        IValidateDM validateDM = factoryDM.getValidateDTO();
+        IChatUserDTO userDTO = mapChatUser.map(user);
+
+        IValidateDM validateDM = factoryDM.getValidateDM();
         validateDM.setValue(true);
         validateDM.setValidateMessage("");
 
-        validateDM = validateUserInputService.validate(user, validateDM);
+        validateDM = validateUserInputService.validate(userDTO, validateDM);
         if (!validateDM.getValue()) {
             throw new BadRequestException(validateDM.getValidateMessage());
         }
 
-        validateDM = validateUniqueUserService.validate(user, getAllUsersService.getAllUsers(), validateDM);
+        validateDM = validateUniqueUserService.validate(userDTO, validateDM);
         if (!validateDM.getValue()) {
             throw new BadRequestException(validateDM.getValidateMessage());
         } else {
 
-            if (StringUtils.hasText(user.getNickName())) {
-                user.setNickName(user.getNickName());
+            if (StringUtils.hasText(userDTO.getNickName())) {
+                userDTO.setNickName(userDTO.getNickName());
             } else {
-                user.setNickName(user.getName());
+                userDTO.setNickName(userDTO.getUserName());
             }
 
-            user.setId(USER_PREF + user.getName() + "_" + id.incrementAndGet());
-            adUserService.addUser(user);
+            IChatUserDTO createdUserDTO = userRepositoryService.insert(userDTO);
 
-            publishNewUserService.publish(user);
+            IAppMessageDTO appAddUserMessageDTO = addNewUserMessageTODBService.add(createdUserDTO, null, null);
 
-            return user;
+            ChatUser createdUser = mapChatUser.map(createdUserDTO);
+
+            publishMessageService.publish(appAddUserMessageDTO);
+
+            return createdUser;
         }
     }
 }

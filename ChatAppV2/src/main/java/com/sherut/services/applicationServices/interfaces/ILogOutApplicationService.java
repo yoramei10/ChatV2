@@ -2,7 +2,7 @@ package com.sherut.services.applicationServices.interfaces;
 
 import com.sherut.models.ResourceDM.ChatUser;
 
-public interface IRemoveUserApplicationService {
+public interface ILogOutApplicationService {
 
-    public ChatUser removeUser(String id);
+    public ChatUser logoutUser(String id);
 }

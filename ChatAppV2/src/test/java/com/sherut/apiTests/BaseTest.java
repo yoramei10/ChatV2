@@ -1,10 +1,14 @@
 package com.sherut.apiTests;
 
 import com.sherut.api.RestControllerApp;
-import com.sherut.messaging.interfaces.IPublishMessageService;
-import com.sherut.models.DM.interfaces.IAllUserDM;
-import com.sherut.models.ResourceDM.AppMessage;
-import com.sherut.models.ResourceDM.ChatUser;
+import com.sherut.messaging.interfaces.IPublishMessageGWService;
+import com.sherut.models.DTO.implementations.AppMessageDTO;
+import com.sherut.models.DTO.implementations.ChatUserDTO;
+import com.sherut.models.DTO.interfaces.IAppMessageDTO;
+import com.sherut.models.DTO.interfaces.IChatUserDTO;
+import com.sherut.models.enums.AppMessageTypeENUM;
+import com.sherut.repository.interfaces.IMessageRepository;
+import com.sherut.repository.interfaces.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,32 +23,41 @@ public class BaseTest {
 
     @Autowired
     protected RestControllerApp restControllerApp;
-    @Autowired
-    protected IAllUserDM allUsers;
 
-    @Autowired
     @MockBean
-    protected IPublishMessageService publishMessageMock;
+    protected IPublishMessageGWService publishMessageMock;
+
+    @MockBean
+    protected IUserRepository userRepositoryMock;
+
+    @MockBean
+    protected IMessageRepository messageRepositoryMock;
 
     String PREF = "User_";
 
     String USER_NAME1 = "user1";
-    String USER_ID1 = PREF+USER_NAME1+"_1";
+    String USER_ID1 = "userId1";
     String PASSWORD1 = "pass1";
     String NICKNAME1 = "nickName1";
 
     String USER_NAME2 = "user2";
-    String USER_ID2 = PREF+USER_NAME2+"_2";
+    String USER_ID2 = "userId2";
     String PASSWORD2 = "pass1";
     String NICKNAME2 = "nickName2";
+
+    String MESSAGE_CONTEXCT1 = "message1";
 
     String ADMIN = "admin";
 
     String TOPIC_NAME = "ChatTopic";
 
     String MESSAGE_TYPE = "MESSAGE";
+    String NEW_USER_TYPE = "ADD_USER";
     String REMOVE_USER_TYPE = "REMOVE_USER";
     String ADD_USER_TYPE = "ADD_USER";
+
+    String MESSAGE_ID_1 = "messageID1";
+    String MESSAGE_CONTEXT_NEW_USER = "add new user";
 
     String NO_VALID_PASSWORD_MESSAGE = "not valid password";
     String NO_VALID_USERNAME_MESSAGE = "not valid user name";
@@ -54,32 +67,38 @@ public class BaseTest {
     String NICK_NAME_ALREADY_EXIST_MESSAGE = "nick name already exist";
     String FAIL_REMOVE_USER_MESSAGE = "fail remove user. not found";
 
-        protected ChatUser buildUser(String userName, String id, String password, String nickName){
+        protected IChatUserDTO buildUser(String userName, String id, String password, String nickName){
 
-        ChatUser chatUser = new ChatUser();
-        chatUser.setName(userName);
+        IChatUserDTO chatUser = new ChatUserDTO(id);
+        chatUser.setUserName(userName);
         chatUser.setNickName(nickName);
         chatUser.setPassword(password);
-        chatUser.setId(id);
 
         return chatUser;
     }
 
-    protected List<ChatUser> buildAllUsers(){
-        ChatUser chatUser1 = buildUser(USER_NAME1, USER_ID1, PASSWORD1, NICKNAME1);
-        ChatUser chatUser2 = buildUser(USER_NAME2, USER_ID2, PASSWORD2, NICKNAME2);
-        List<ChatUser> chatUsers = new ArrayList<>();
+    protected List<IChatUserDTO> buildAllUsers(){
+        IChatUserDTO chatUser1 = buildUser(USER_NAME1, USER_ID1, PASSWORD1, NICKNAME1);
+        IChatUserDTO chatUser2 = buildUser(USER_NAME2, USER_ID2, PASSWORD2, NICKNAME2);
+        List<IChatUserDTO> chatUsers = new ArrayList<>();
         chatUsers.add(chatUser1);
         chatUsers.add(chatUser2);
 
         return chatUsers;
     }
 
-    protected AppMessage buildMessage(String USER_ID1, String USER_NAME1, String ADD_USER_TYPE, String MESSAGE_CONTEXCT){
-        AppMessage appMessage = new AppMessage();
-        appMessage.setId(USER_ID1);
-        appMessage.setNickName(USER_NAME1);
-        appMessage.setType(ADD_USER_TYPE);
+    protected IAppMessageDTO buildMessage(){
+            return buildMessage(MESSAGE_ID_1, USER_ID1, USER_NAME1, NICKNAME1, AppMessageTypeENUM.MESSAGE, MESSAGE_CONTEXCT1);
+
+        }
+
+        protected IAppMessageDTO buildMessage(String id, String userId, String userName,String nickName, AppMessageTypeENUM type, String MESSAGE_CONTEXCT){
+        IAppMessageDTO appMessage = new AppMessageDTO();
+        appMessage.setId(id);
+        appMessage.setUserId(userId);
+        appMessage.setUserName(userName);
+        appMessage.setNickName(nickName);
+        appMessage.setType(type);
         appMessage.setMsgContext(MESSAGE_CONTEXCT);
 
         return appMessage;

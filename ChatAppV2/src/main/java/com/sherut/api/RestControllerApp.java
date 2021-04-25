@@ -1,11 +1,12 @@
 package com.sherut.api;
 
 import com.sherut.mappers.interfaces.IMapAppMessage;
-import com.sherut.mappers.interfaces.IMapAppMessageToMessagingAppMessage;
-import com.sherut.mappers.interfaces.IMapChatUserToChatUserDM;
+import com.sherut.mappers.interfaces.IMapChatUser;
 import com.sherut.models.ResourceDM.AppMessage;
 import com.sherut.models.ResourceDM.ChatUser;
 import com.sherut.models.ResourceDM.TopicParams;
+import com.sherut.repository.interfaces.IMessageRepository;
+import com.sherut.repository.interfaces.IUserRepository;
 import com.sherut.services.applicationServices.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 
@@ -27,19 +29,25 @@ public class RestControllerApp {
     @Autowired
     private IGetAllUsersApplicationService getAllUsersApplicationService;
     @Autowired
-    private IRemoveUserApplicationService removeUserApplicationService;
+    private ILogOutApplicationService removeUserApplicationService;
     @Autowired
     private IPublishMessageApplicationService publishMessageApplicationService;
     @Autowired
-    private IMapChatUserToChatUserDM mapChatUserToChatUserDM;
+    private IMapChatUser mapChatUser;
     @Autowired
     private IMapAppMessage mapAppMessage;
-    @Autowired
-    private IMapAppMessageToMessagingAppMessage mapAppMessageToMessagingAppMessage;
     @Autowired
     private IGetTopicApplicationService getTopicApplicationService;
     @Autowired
     private IGetAllMessagesApplicationService getAllMessagesApplicationService;
+    @Autowired
+    private IMessageRepository messageRepository;
+    @Autowired
+    private IUserRepository userRepository;
+
+    @Value("${configuration.mongoDB.clearDBInSetup}")
+    boolean clearDBInSetup;
+
 
     @Value("${url.baseUrl}")
     String BASEAPI1;
@@ -61,9 +69,9 @@ public class RestControllerApp {
             method = RequestMethod.DELETE,
             path = BASEAPI + "/{id}/logout",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> removeUser(@PathVariable("id") String id) {
+    public ResponseEntity<String> logOut(@PathVariable("id") String id) {
 
-        ChatUser userToRemove = removeUserApplicationService.removeUser(id);
+        ChatUser userToRemove = removeUserApplicationService.logoutUser(id);
 
         return new ResponseEntity<String>(String.format("user %s was removed", userToRemove.getName()), HttpStatus.OK);
     }
@@ -95,9 +103,9 @@ public class RestControllerApp {
             consumes = "application/json",
             method = RequestMethod.POST)
     public ResponseEntity<String> publishNewMessage(@PathVariable("id") String id,
-                                            @RequestBody AppMessage appMessage) {
+                                            @RequestBody Object messageContext) {
 
-        publishMessageApplicationService.publish(id, appMessage);
+        publishMessageApplicationService.publish(id, messageContext);
 
         return new ResponseEntity<String>( "message was published successfully", HttpStatus.BAD_REQUEST);
     }
@@ -121,6 +129,16 @@ public class RestControllerApp {
         List<AppMessage> aLlMessages = getAllMessagesApplicationService.getALlMessages(id);
 
         return new ResponseEntity<List<AppMessage>>(aLlMessages, HttpStatus.OK);
+    }
+
+    @PostConstruct
+    void postConstructCleanRepo(){
+        System.out.println("clean all messages");
+        messageRepository.deleteAll();
+
+        if (clearDBInSetup){
+            userRepository.deleteAll();
+        }
     }
 
 }
