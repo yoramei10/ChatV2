@@ -56,6 +56,8 @@ public class GetAllMessagesTest extends BaseTest {
         ResponseEntity<List<AppMessage>> allMessages = restControllerApp.getAllMessages(USER_ID1);
 
         Assert.assertEquals(2, allMessages.getBody().size());
+        Assert.assertEquals(appMessageDTO.getNickName(), allMessages.getBody().get(0).getNickName());
+        Assert.assertEquals(appMessageDTO2.getNickName(), allMessages.getBody().get(1).getNickName());
 
     }
 }
