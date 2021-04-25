@@ -25,7 +25,7 @@ public class PublishMessageTest extends BaseTest {
     private static final String ADD_USER = "ADD_USER";
     private AppMessage appMessage;
     private IAppMessageDTO appMessageDTO;
-    private static final String MESSAGE_CONTEXCT = "new message";
+    private static final String MESSAGE_CONTEXT = "new message";
 
     @Autowired
     private RestControllerApp restControllerApp;
@@ -41,7 +41,7 @@ public class PublishMessageTest extends BaseTest {
         userDTO.setNickName(NICKNAME1);
         userDTO.setPassword(PASSWORD1);
 
-        appMessageDTO = buildMessage(MESSAGE_ID_1, USER_ID1, USER_NAME1, NICKNAME1, AppMessageTypeENUM.ADD_USER, MESSAGE_CONTEXCT);
+        appMessageDTO = buildMessage(MESSAGE_ID_1, USER_ID1, USER_NAME1, NICKNAME1, AppMessageTypeENUM.MESSAGE, MESSAGE_CONTEXT);
 
         Mockito.when(userRepositoryMock.getById(anyString())).thenReturn(userDTO);
         Mockito.when(messageRepositoryMock.insert((IAppMessageDTO) any())).thenReturn(appMessageDTO);
@@ -56,18 +56,28 @@ public class PublishMessageTest extends BaseTest {
     @Test
     public void publishUserMessage_Success(){
 
-        ArgumentCaptor<AppMessage> argumentCaptor = ArgumentCaptor.forClass(AppMessage.class);
+        ArgumentCaptor<AppMessage> messageCaptor = ArgumentCaptor.forClass(AppMessage.class);
+        ArgumentCaptor<IAppMessageDTO> messageRepoCaptor = ArgumentCaptor.forClass(IAppMessageDTO.class);
 
-        restControllerApp.publishNewMessage(USER_ID1, appMessage);
+        restControllerApp.publishNewMessage(USER_ID1, MESSAGE_CONTEXT);
 
-        verify(publishMessageMock, times(1)).publish(argumentCaptor.capture());
+        verify(publishMessageMock, times(1)).publish(messageCaptor.capture());
+        verify(messageRepositoryMock, times(1)).insert(messageRepoCaptor.capture());
 
-        AppMessage message = argumentCaptor.getValue();
-        Assert.assertEquals(NEW_USER_TYPE, message.getType().name());
+        AppMessage message = messageCaptor.getValue();
+        Assert.assertEquals(MESSAGE_TYPE, message.getType().name());
         Assert.assertEquals(NICKNAME1, message.getNickName());
         Assert.assertEquals(MESSAGE_ID_1, message.getId());
         Assert.assertNull(null, message.getUserName());
-        Assert.assertEquals(MESSAGE_CONTEXCT, message.getMsgContext());
+        Assert.assertEquals(MESSAGE_CONTEXT, message.getMsgContext());
+
+        IAppMessageDTO messageToInsert = messageRepoCaptor.getValue();
+        Assert.assertEquals(null, messageToInsert.getId());
+        Assert.assertEquals(MESSAGE_TYPE, messageToInsert.getType().name());
+        Assert.assertEquals(MESSAGE_CONTEXT, messageToInsert.getMsgContext());
+        Assert.assertEquals(null, messageToInsert.getUserId());
+        Assert.assertEquals(null, messageToInsert.getUserName());
+        Assert.assertEquals(NICKNAME1, messageToInsert.getNickName());
 
     }
 

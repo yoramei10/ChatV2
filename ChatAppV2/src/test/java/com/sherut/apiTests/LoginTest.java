@@ -79,10 +79,6 @@ public class LoginTest extends BaseTest {
 
         ResponseEntity<ChatUser> user1 = restControllerApp.login(user);
 
-//        ArgumentCaptor<AppMessage> messageCaptor = ArgumentCaptor.forClass(AppMessage.class);
-//        ArgumentCaptor<IChatUserDTO> userRepoCaptor = ArgumentCaptor.forClass(IChatUserDTO.class);
-//        ArgumentCaptor<IAppMessageDTO> messageRepoCaptor = ArgumentCaptor.forClass(IAppMessageDTO.class);
-
         verify(userRepositoryMock, times(1)).insert(userRepoCaptor.capture());
         verify(messageRepositoryMock, times(1)).insert(messageRepoCaptor.capture());
         verify(publishMessageMock, times(1)).publish(messageCaptor.capture());
@@ -193,8 +189,6 @@ public class LoginTest extends BaseTest {
         }catch (BadRequestException ex){
             Assert.assertTrue("expected: "+ USER_NAME_ALREADY_EXIST_MESSAGE + ", get: " + ex.getMessage(),
                     ex.getMessage().contains(USER_NAME_ALREADY_EXIST_MESSAGE));
-//            Assert.assertTrue("expected: "+ NICK_NAME_ALREADY_EXIST_MESSAGE + ", get: " + ex.getMessage(),
-//                    ex.getMessage().contains(NICK_NAME_ALREADY_EXIST_MESSAGE));
         }
     }
 

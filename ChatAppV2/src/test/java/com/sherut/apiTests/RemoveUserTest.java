@@ -42,6 +42,7 @@ public class RemoveUserTest extends BaseTest{
         ResponseEntity<String> response = restControllerApp.logOut(USER_ID1);
 
         verify(publishMessageMock, times(1)).publish(argumentCaptor.capture());
+        verify(userRepositoryMock, times(1)).deleteById(USER_ID1);
 
         Assert.assertEquals(String.format("user %s was removed", USER_NAME1), response.getBody());
         Assert.assertEquals(REMOVE_USER_TYPE, argumentCaptor.getValue().getType().name());
