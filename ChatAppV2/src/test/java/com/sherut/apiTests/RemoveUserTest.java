@@ -4,6 +4,7 @@ import com.sherut.exceptions.EntityNotFoundException;
 import com.sherut.models.ResourceDM.AppMessage;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -29,11 +30,8 @@ public class RemoveUserTest extends BaseTest{
         }
     }
 
-    @After
-//    public void afterTests(){
-//        ReflectionTestUtils.setField(allUsers, "allUsers", new ArrayList<>());
-//    }
 
+    @Ignore
     @Test
     public void removeUser_Success(){
 

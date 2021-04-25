@@ -9,6 +9,9 @@ import com.sherut.models.DTO.interfaces.IChatUserDTO;
 import com.sherut.models.enums.AppMessageTypeENUM;
 import com.sherut.repository.interfaces.IMessageRepository;
 import com.sherut.repository.interfaces.IUserRepository;
+import org.junit.Before;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -16,6 +19,8 @@ import org.springframework.test.context.TestPropertySource;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
 
 @TestPropertySource("classpath:application-test.yaml")
 @SpringBootTest
@@ -67,9 +72,21 @@ public class BaseTest {
     String NICK_NAME_ALREADY_EXIST_MESSAGE = "nick name already exist";
     String FAIL_REMOVE_USER_MESSAGE = "fail remove user. not found";
 
-        protected IChatUserDTO buildUser(String userName, String id, String password, String nickName){
+    @Before
+    public void init() {
 
-        IChatUserDTO chatUser = new ChatUserDTO(id);
+        Mockito.when(userRepositoryMock.getByUserName(any())).thenReturn(buildUser());
+    }
+
+    protected IChatUserDTO buildUser() {
+
+        return buildUser(USER_NAME1, USER_ID1, PASSWORD1, NICKNAME1);
+    }
+
+    protected IChatUserDTO buildUser(String userName, String id, String password, String nickName) {
+
+        IChatUserDTO chatUser = new ChatUserDTO(userName);
+        chatUser.setId(id);
         chatUser.setUserName(userName);
         chatUser.setNickName(nickName);
         chatUser.setPassword(password);
@@ -77,7 +94,7 @@ public class BaseTest {
         return chatUser;
     }
 
-    protected List<IChatUserDTO> buildAllUsers(){
+    protected List<IChatUserDTO> buildAllUsers() {
         IChatUserDTO chatUser1 = buildUser(USER_NAME1, USER_ID1, PASSWORD1, NICKNAME1);
         IChatUserDTO chatUser2 = buildUser(USER_NAME2, USER_ID2, PASSWORD2, NICKNAME2);
         List<IChatUserDTO> chatUsers = new ArrayList<>();
@@ -87,12 +104,12 @@ public class BaseTest {
         return chatUsers;
     }
 
-    protected IAppMessageDTO buildMessage(){
-            return buildMessage(MESSAGE_ID_1, USER_ID1, USER_NAME1, NICKNAME1, AppMessageTypeENUM.MESSAGE, MESSAGE_CONTEXCT1);
+    protected IAppMessageDTO buildMessage() {
+        return buildMessage(MESSAGE_ID_1, USER_ID1, USER_NAME1, NICKNAME1, AppMessageTypeENUM.MESSAGE, MESSAGE_CONTEXCT1);
 
-        }
+    }
 
-        protected IAppMessageDTO buildMessage(String id, String userId, String userName,String nickName, AppMessageTypeENUM type, String MESSAGE_CONTEXCT){
+    protected IAppMessageDTO buildMessage(String id, String userId, String userName, String nickName, AppMessageTypeENUM type, String MESSAGE_CONTEXCT) {
         IAppMessageDTO appMessage = new AppMessageDTO();
         appMessage.setId(id);
         appMessage.setUserId(userId);
@@ -103,4 +120,6 @@ public class BaseTest {
 
         return appMessage;
     }
+
+
 }

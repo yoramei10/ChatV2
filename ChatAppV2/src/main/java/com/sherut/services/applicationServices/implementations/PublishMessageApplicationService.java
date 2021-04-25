@@ -24,11 +24,7 @@ public class PublishMessageApplicationService implements IPublishMessageApplicat
     @Autowired
     private IValidateExistUserService validateExistUserService;
     @Autowired
-    private IMessageRepository chatRepository;
-    @Autowired
     private IMapAppMessage mapAppMessage;
-    @Autowired
-    private IBuildAppMessageService buildAppMessageService;
     @Autowired
     @Qualifier("addMessageToDB")
     private IAddMessageTODBService addMessageTODBService;

@@ -2,12 +2,10 @@ package com.sherut.services.applicationServices.implementations;
 
 import com.sherut.exceptions.EntityNotFoundException;
 import com.sherut.mappers.interfaces.IMapChatUser;
-import com.sherut.messaging.interfaces.IPublishMessageGWService;
 import com.sherut.models.DTO.interfaces.IAppMessageDTO;
 import com.sherut.models.DTO.interfaces.IChatUserDTO;
 import com.sherut.models.ResourceDM.ChatUser;
 import com.sherut.models.enums.AppMessageTypeENUM;
-import com.sherut.repository.interfaces.IMessageRepository;
 import com.sherut.repository.interfaces.IUserRepository;
 import com.sherut.services.applicationServices.interfaces.ILogOutApplicationService;
 import com.sherut.services.domainServices.interfaces.IAddMessageTODBService;

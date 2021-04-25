@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -18,12 +19,8 @@ public class GetAllUsersTest extends BaseTest{
     @BeforeEach
     public void init(){
 
-//        ReflectionTestUtils.setField(allUsers, "allUsers", buildAllUsers());
-        try {
-            Thread.sleep(10);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Mockito.when(userRepositoryMock.findAll()).thenReturn(buildAllUsers());
+
     }
 
     @After
@@ -36,9 +33,10 @@ public class GetAllUsersTest extends BaseTest{
 
         ResponseEntity<List<ChatUser>> allUsers = restControllerApp.getAllUsers(ADMIN);
 
-        Assert.assertTrue(allUsers.getBody().get(0).getId().contains(PREF+USER_NAME1));
+        Assert.assertEquals(2, allUsers.getBody().size());
+        Assert.assertEquals(USER_ID1, allUsers.getBody().get(0).getId());
         Assert.assertEquals(USER_NAME1,allUsers.getBody().get(0).getName());
-        Assert.assertTrue(allUsers.getBody().get(1).getId().contains(PREF+USER_NAME2));
+        Assert.assertEquals(USER_ID1, allUsers.getBody().get(0).getId());
         Assert.assertEquals(USER_NAME2,allUsers.getBody().get(1).getName());
     }
 
