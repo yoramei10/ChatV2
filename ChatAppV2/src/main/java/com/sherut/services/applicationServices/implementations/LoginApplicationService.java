@@ -34,8 +34,6 @@ public class LoginApplicationService implements ILoginApplicationService {
     @Autowired
     private IMapChatUser mapChatUser;
     @Autowired
-    private IMessageRepository messageRepository;
-    @Autowired
     @Qualifier("addNewUserMessageToDB")
     private IAddMessageTODBService addNewUserMessageTODBService;
 

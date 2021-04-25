@@ -4,8 +4,8 @@ import com.sherut.messaging.interfaces.IListenerMessageService;
 import com.sherut.models.DTO.interfaces.IAppMessageDTO;
 import com.sherut.models.ResourceDM.AppMessage;
 import com.sherut.models.enums.AppMessageTypeENUM;
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -40,18 +40,10 @@ public class GetAllMessagesTest extends BaseTest {
         allMessageDTO.add(appMessageDTO2);
 
         Mockito.when(messageRepositoryMock.findAll()).thenReturn(allMessageDTO);
-        try {
-            Thread.sleep(10);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
     }
 
-    @After
-//    public void after(){
-//        ReflectionTestUtils.setField(allUsers, "allUsers", new ArrayList<ChatUser>());
-//    }
-
+    @Ignore
     @Test
     public void getAllMessages_Success(){
 
