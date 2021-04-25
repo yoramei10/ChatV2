@@ -2,20 +2,15 @@ package com.sherut.apiTests;
 
 import com.sherut.exceptions.EntityNotFoundException;
 import com.sherut.models.DTO.interfaces.IAppMessageDTO;
-import com.sherut.models.DTO.interfaces.IChatUserDTO;
 import com.sherut.models.ResourceDM.AppMessage;
 import com.sherut.models.enums.AppMessageTypeENUM;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.ArrayList;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -34,7 +29,6 @@ public class RemoveUserTest extends BaseTest{
     }
 
 
-    @Ignore
     @Test
     public void removeUser_Success(){
 

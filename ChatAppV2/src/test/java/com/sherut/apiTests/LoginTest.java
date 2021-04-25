@@ -9,12 +9,10 @@ import com.sherut.models.ResourceDM.AppMessage;
 import com.sherut.models.ResourceDM.ChatUser;
 import com.sherut.models.enums.AppMessageTypeENUM;
 import com.sherut.services.domainServices.implementations.BuildAppMessageService;
-import org.junit.Ignore;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.junit.Assert;
@@ -184,11 +182,10 @@ public class LoginTest extends BaseTest {
         Assert.assertTrue(message.getMsgContext().toString().contains(MESSAGE_CONTEXT_NEW_USER));
     }
 
-    @Ignore
     @Test
     public void loginExistUser_fail() {
 
-        when(userRepositoryMock.getById(any())).thenReturn(userDTO);
+        when(userRepositoryMock.getByUserName(any())).thenReturn(userDTO);
 
         try {
             restControllerApp.login(user);
@@ -196,8 +193,8 @@ public class LoginTest extends BaseTest {
         }catch (BadRequestException ex){
             Assert.assertTrue("expected: "+ USER_NAME_ALREADY_EXIST_MESSAGE + ", get: " + ex.getMessage(),
                     ex.getMessage().contains(USER_NAME_ALREADY_EXIST_MESSAGE));
-            Assert.assertTrue("expected: "+ NICK_NAME_ALREADY_EXIST_MESSAGE + ", get: " + ex.getMessage(),
-                    ex.getMessage().contains(NICK_NAME_ALREADY_EXIST_MESSAGE));
+//            Assert.assertTrue("expected: "+ NICK_NAME_ALREADY_EXIST_MESSAGE + ", get: " + ex.getMessage(),
+//                    ex.getMessage().contains(NICK_NAME_ALREADY_EXIST_MESSAGE));
         }
     }
 

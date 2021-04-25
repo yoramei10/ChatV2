@@ -10,7 +10,6 @@ import com.sherut.models.enums.AppMessageTypeENUM;
 import com.sherut.repository.interfaces.IMessageRepository;
 import com.sherut.repository.interfaces.IUserRepository;
 import org.junit.Before;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

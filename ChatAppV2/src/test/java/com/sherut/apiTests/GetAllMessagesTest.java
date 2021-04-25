@@ -5,7 +5,6 @@ import com.sherut.models.DTO.interfaces.IAppMessageDTO;
 import com.sherut.models.ResourceDM.AppMessage;
 import com.sherut.models.enums.AppMessageTypeENUM;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -46,7 +45,6 @@ public class GetAllMessagesTest extends BaseTest {
 
     }
 
-    @Ignore
     @Test
     public void getAllMessages_Success(){
 
