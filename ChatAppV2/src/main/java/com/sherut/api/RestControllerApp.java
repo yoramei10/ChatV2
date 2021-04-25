@@ -20,6 +20,7 @@ import java.util.List;
 
 
 @RestController
+@RequestMapping("/chatApp")
 public class RestControllerApp {
 
     @Autowired
@@ -49,14 +50,9 @@ public class RestControllerApp {
     boolean clearDBInSetup;
 
 
-    @Value("${url.baseUrl}")
-    String BASEAPI1;
-    final String BASEAPI = "/chatApp";
-
-
     @RequestMapping(
             method = RequestMethod.POST,
-            value = BASEAPI + "/login",
+            value = "/login",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ChatUser> login(@RequestBody ChatUser user) {
 
@@ -67,7 +63,7 @@ public class RestControllerApp {
 
     @RequestMapping(
             method = RequestMethod.DELETE,
-            path = BASEAPI + "/{id}/logout",
+            path = "/{id}/logout",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> logOut(@PathVariable("id") String id) {
 
@@ -78,7 +74,7 @@ public class RestControllerApp {
 
     @RequestMapping(
             method = RequestMethod.GET,
-            path = BASEAPI + "/{id}/getAllNickNames",
+            path = "/{id}/getAllNickNames",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<String>> getAllNickNames(@PathVariable("id") String id) {
 
@@ -89,7 +85,7 @@ public class RestControllerApp {
 
     @RequestMapping(
             method = RequestMethod.GET,
-            path = BASEAPI + "/{id}/getAllUsers",
+            path = "/{id}/getAllUsers",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ChatUser>>getAllUsers(@PathVariable("id") String id) {
 
@@ -98,10 +94,11 @@ public class RestControllerApp {
         return new ResponseEntity<List<ChatUser>>(allUsers, HttpStatus.OK);
     }
 
-    @RequestMapping(value = BASEAPI + "/{id}/publishNewMessage",
+    @RequestMapping(
+            method = RequestMethod.POST,
+            value = "/{id}/publishNewMessage",
             produces = "application/json",
-            consumes = "application/json",
-            method = RequestMethod.POST)
+            consumes = "application/json")
     public ResponseEntity<String> publishNewMessage(@PathVariable("id") String id,
                                             @RequestBody Object messageContext) {
 
@@ -112,7 +109,7 @@ public class RestControllerApp {
 
     @RequestMapping(
             method = RequestMethod.GET,
-            value = BASEAPI + "/getTopic",
+            value = "/getTopic",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TopicParams> getTopic() {
 
@@ -122,7 +119,7 @@ public class RestControllerApp {
 
     @RequestMapping(
             method = RequestMethod.GET,
-            value = BASEAPI + "/{id}/getAllMessages",
+            value =  "/{id}/getAllMessages",
             produces = "application/json")
     public ResponseEntity<List<AppMessage>> getAllMessages(@PathVariable("id") String id) {
 

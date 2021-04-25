@@ -25,7 +25,7 @@ public class AddRemoveUserMessageTODBService implements IAddMessageTODBService {
     public IAppMessageDTO add(IChatUserDTO userDTO, AppMessageTypeENUM type, Object messageContext) {
 
 
-        return addMessageTODBService.add(userDTO, AppMessageTypeENUM.ADD_USER, removeUserMessageContext+userDTO.getNickName());
+        return addMessageTODBService.add(userDTO, AppMessageTypeENUM.REMOVE_USER, removeUserMessageContext+userDTO.getNickName());
 
     }
 }
