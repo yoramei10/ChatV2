@@ -1,13 +1,17 @@
 package com.sherut.apiTests;
 
 import com.sherut.exceptions.EntityNotFoundException;
+import com.sherut.models.DTO.interfaces.IAppMessageDTO;
+import com.sherut.models.DTO.interfaces.IChatUserDTO;
 import com.sherut.models.ResourceDM.AppMessage;
+import com.sherut.models.enums.AppMessageTypeENUM;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -22,7 +26,6 @@ public class RemoveUserTest extends BaseTest{
     @BeforeEach
     public void init(){
 
-//        ReflectionTestUtils.setField(allUsers, "allUsers", buildAllUsers());
         try {
             Thread.sleep(10);
         } catch (InterruptedException e) {
@@ -35,6 +38,11 @@ public class RemoveUserTest extends BaseTest{
     @Test
     public void removeUser_Success(){
 
+        IAppMessageDTO appMessageDTO = buildMessage(MESSAGE_ID_1, USER_ID1, USER_NAME1, NICKNAME1, AppMessageTypeENUM.REMOVE_USER, "remove user ");
+
+        Mockito.when(userRepositoryMock.getById(any())).thenReturn(buildUser());
+        Mockito.when(messageRepositoryMock.insert((IAppMessageDTO) any())).thenReturn(appMessageDTO);
+
         ArgumentCaptor<AppMessage> argumentCaptor = ArgumentCaptor.forClass(AppMessage.class);
 
         ResponseEntity<String> response = restControllerApp.logOut(USER_ID1);
@@ -42,7 +50,7 @@ public class RemoveUserTest extends BaseTest{
         verify(publishMessageMock, times(1)).publish(argumentCaptor.capture());
 
         Assert.assertEquals(String.format("user %s was removed", USER_NAME1), response.getBody());
-        Assert.assertEquals(REMOVE_USER_TYPE, argumentCaptor.getValue().getType());
+        Assert.assertEquals(REMOVE_USER_TYPE, argumentCaptor.getValue().getType().name());
     }
 
     @Test

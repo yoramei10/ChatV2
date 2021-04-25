@@ -7,9 +7,6 @@ import com.sherut.models.DTO.interfaces.IAppMessageDTO;
 import com.sherut.models.DTO.interfaces.IChatUserDTO;
 import com.sherut.models.ResourceDM.AppMessage;
 import com.sherut.models.enums.AppMessageTypeENUM;
-import com.sherut.repository.interfaces.IMessageRepository;
-import com.sherut.repository.interfaces.IUserRepository;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,9 +14,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -34,10 +31,6 @@ public class PublishMessageTest extends BaseTest {
     @Autowired
     private RestControllerApp restControllerApp;
 
-//    @MockBean
-//    IMessageRepository messageRepositoryMock1;
-//    @MockBean
-//    IUserRepository userRepositoryMock1;
 
     IChatUserDTO userDTO;
 
@@ -51,8 +44,8 @@ public class PublishMessageTest extends BaseTest {
 
         appMessageDTO = buildMessage(MESSAGE_ID_1, USER_ID1, USER_NAME1, NICKNAME1, AppMessageTypeENUM.ADD_USER, MESSAGE_CONTEXCT);
 
-        Mockito.when(userRepositoryMock.getByUserName(any())).thenReturn(userDTO);
-        Mockito.when(messageRepositoryMock.insert((IAppMessageDTO) any())).thenReturn(null);
+        Mockito.when(userRepositoryMock.getById(anyString())).thenReturn(userDTO);
+        Mockito.when(messageRepositoryMock.insert((IAppMessageDTO) any())).thenReturn(appMessageDTO);
 
         try {
             Thread.sleep(10);
@@ -72,9 +65,9 @@ public class PublishMessageTest extends BaseTest {
         verify(publishMessageMock, times(1)).publish(argumentCaptor.capture());
 
         AppMessage message = argumentCaptor.getValue();
-        Assert.assertEquals(MESSAGE_TYPE, message.getType());
-        Assert.assertEquals(USER_NAME1, message.getNickName());
-        Assert.assertNull(null, message.getId());
+        Assert.assertEquals(NEW_USER_TYPE, message.getType().name());
+        Assert.assertEquals(NICKNAME1, message.getNickName());
+        Assert.assertEquals(MESSAGE_ID_1, message.getId());
         Assert.assertNull(null, message.getUserName());
         Assert.assertEquals(MESSAGE_CONTEXCT, message.getMsgContext());
 
@@ -82,6 +75,8 @@ public class PublishMessageTest extends BaseTest {
 
     @Test
     public void publishUserMessage_wrongUser_fail(){
+
+        Mockito.when(userRepositoryMock.getById(anyString())).thenReturn(null);
 
         try {
             restControllerApp.publishNewMessage("wrongID", appMessage);

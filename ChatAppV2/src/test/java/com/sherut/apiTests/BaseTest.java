@@ -75,7 +75,7 @@ public class BaseTest {
     @Before
     public void init() {
 
-        Mockito.when(userRepositoryMock.getByUserName(any())).thenReturn(buildUser());
+        Mockito.when(userRepositoryMock.getById(any())).thenReturn(buildUser());
     }
 
     protected IChatUserDTO buildUser() {

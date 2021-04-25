@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
+
 public class GetAllMessagesTest extends BaseTest {
 
     @Autowired
@@ -40,6 +42,7 @@ public class GetAllMessagesTest extends BaseTest {
         allMessageDTO.add(appMessageDTO2);
 
         Mockito.when(messageRepositoryMock.findAll()).thenReturn(allMessageDTO);
+        Mockito.when(userRepositoryMock.getById(any())).thenReturn(buildUser());
 
     }
 
