@@ -1,6 +1,7 @@
 package com.sherut.services.domainServices.implementations;
 
 import com.sherut.models.DM.interfaces.IValidateDM;
+import com.sherut.models.DTO.interfaces.IChatUserDTO;
 import com.sherut.models.ResourceDM.ChatUser;
 import com.sherut.services.domainServices.interfaces.IValidateUserInputService;
 import org.springframework.stereotype.Service;
@@ -12,9 +13,9 @@ public class ValidateUserInputServiceService implements IValidateUserInputServic
 
 
     @Override
-    public IValidateDM validate(ChatUser chatUser, IValidateDM validateDM) {
+    public IValidateDM validate(IChatUserDTO chatUser, IValidateDM validateDM) {
 
-        String userName = chatUser.getName();
+        String userName = chatUser.getUserName();
         String password = chatUser.getPassword();
         String nickName  = chatUser.getNickName();
 

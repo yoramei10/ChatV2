@@ -16,7 +16,7 @@ public class GetNickNameTest extends BaseTest{
     @BeforeEach
     public void init(){
 
-        ReflectionTestUtils.setField(allUsers, "allUsers", buildAllUsers());
+//        ReflectionTestUtils.setField(allUsers, "allUsers", buildAllUsers());
         try {
             Thread.sleep(10);
         } catch (InterruptedException e) {
@@ -25,9 +25,9 @@ public class GetNickNameTest extends BaseTest{
     }
 
     @After
-    public void after(){
-        ReflectionTestUtils.setField(allUsers, "allUsers", new ArrayList<>());
-    }
+//    public void after(){
+//        ReflectionTestUtils.setField(allUsers, "allUsers", new ArrayList<>());
+//    }
 
     @Test
     public void getCorrectNickName_Success(){

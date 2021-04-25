@@ -18,7 +18,7 @@ public class GetAllUsersTest extends BaseTest{
     @BeforeEach
     public void init(){
 
-        ReflectionTestUtils.setField(allUsers, "allUsers", buildAllUsers());
+//        ReflectionTestUtils.setField(allUsers, "allUsers", buildAllUsers());
         try {
             Thread.sleep(10);
         } catch (InterruptedException e) {

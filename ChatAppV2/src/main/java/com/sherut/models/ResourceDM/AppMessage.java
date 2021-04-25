@@ -1,6 +1,7 @@
 package com.sherut.models.ResourceDM;
 
 
+import com.sherut.models.enums.AppMessageTypeENUM;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,11 +11,11 @@ public class AppMessage implements Serializable {
 
     @Getter
     @Setter
-    String id;
+    String userId;
 
     @Getter
     @Setter
-    String name;
+    String userName;
 
     @Getter
     @Setter
@@ -22,7 +23,11 @@ public class AppMessage implements Serializable {
 
     @Getter
     @Setter
-    String type;
+    String id;
+
+    @Getter
+    @Setter
+    AppMessageTypeENUM type;
 
     @Getter
     @Setter

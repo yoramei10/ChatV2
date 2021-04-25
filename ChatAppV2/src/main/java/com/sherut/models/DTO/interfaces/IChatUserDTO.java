@@ -5,8 +5,8 @@ public interface IChatUserDTO {
     String getId();
     void setId(String id);
 
-    String getName();
-    void setName(String name);
+    String getUserName();
+    void setUserName(String userName);
 
     String getNickName();
     void setNickName(String nickName);

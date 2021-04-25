@@ -2,23 +2,27 @@ package com.sherut.apiTests;
 
 import com.sherut.api.RestControllerApp;
 import com.sherut.exceptions.BadRequestException;
+import com.sherut.models.DTO.implementations.ChatUserDTO;
+import com.sherut.models.DTO.interfaces.IAppMessageDTO;
+import com.sherut.models.DTO.interfaces.IChatUserDTO;
 import com.sherut.models.ResourceDM.AppMessage;
 import com.sherut.models.ResourceDM.ChatUser;
+import com.sherut.models.enums.AppMessageTypeENUM;
 import com.sherut.services.domainServices.implementations.BuildAppMessageService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.junit.Assert;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 
 public class LoginTest extends BaseTest {
@@ -29,7 +33,12 @@ public class LoginTest extends BaseTest {
     private BuildAppMessageService buildAppMessageService;
 
     ChatUser user;
+    IChatUserDTO userDTO;
+    IAppMessageDTO messageTDO;
 
+    ArgumentCaptor<AppMessage> messageCaptor = ArgumentCaptor.forClass(AppMessage.class);
+    ArgumentCaptor<IChatUserDTO> userRepoCaptor = ArgumentCaptor.forClass(IChatUserDTO.class);
+    ArgumentCaptor<IAppMessageDTO> messageRepoCaptor = ArgumentCaptor.forClass(IAppMessageDTO.class);
 
     @BeforeEach
     public void init(){
@@ -38,8 +47,22 @@ public class LoginTest extends BaseTest {
         user.setName(USER_NAME1);
         user.setNickName(NICKNAME1);
         user.setPassword(PASSWORD1);
+        List<ChatUser> objects = java.util.Arrays.asList(user);
 
-        ReflectionTestUtils.setField(allUsers, "allUsers", new ArrayList<>());
+        userDTO = new ChatUserDTO(USER_NAME1);
+        userDTO.setId(USER_ID1);
+        userDTO.setNickName(NICKNAME1);
+        userDTO.setPassword(PASSWORD1);
+        List<IChatUserDTO> userDTOList = java.util.Arrays.asList(userDTO);
+
+        messageTDO = buildMessage(MESSAGE_ID_1, null, null, NICKNAME1,  AppMessageTypeENUM.ADD_USER, MESSAGE_CONTEXT_NEW_USER);
+
+        Mockito.when(userRepositoryMock.findAll()).thenReturn(userDTOList);
+        when(userRepositoryMock.insert((IChatUserDTO) any())).thenReturn(userDTO);
+        when(userRepositoryMock.getById(any())).thenReturn(null);
+
+        when(messageRepositoryMock.insert((IAppMessageDTO) any())).thenReturn(messageTDO);
+
         try {
             Thread.sleep(10);
         } catch (InterruptedException e) {
@@ -57,61 +80,115 @@ public class LoginTest extends BaseTest {
 
         ResponseEntity<ChatUser> user1 = restControllerApp.login(user);
 
-        ArgumentCaptor<AppMessage> argumentCaptor = ArgumentCaptor.forClass(AppMessage.class);
+        ArgumentCaptor<AppMessage> messageCaptor = ArgumentCaptor.forClass(AppMessage.class);
+        ArgumentCaptor<IChatUserDTO> userRepoCaptor = ArgumentCaptor.forClass(IChatUserDTO.class);
+        ArgumentCaptor<IAppMessageDTO> messageRepoCaptor = ArgumentCaptor.forClass(IAppMessageDTO.class);
 
-        verify(publishMessageMock, times(1)).publish(argumentCaptor.capture());
+        verify(userRepositoryMock, times(1)).insert(userRepoCaptor.capture());
+        verify(messageRepositoryMock, times(1)).insert(messageRepoCaptor.capture());
+        verify(publishMessageMock, times(1)).publish(messageCaptor.capture());
 
-        Assert.assertTrue("should contain "+PREF+USER_NAME1, user1.getBody().getId().contains(PREF+USER_NAME1));
-        Assert.assertEquals(USER_NAME1, user1.getBody().getName());
-        Assert.assertEquals(NICKNAME1, user1.getBody().getNickName());
-        Assert.assertEquals(PASSWORD1, user1.getBody().getPassword());
+        ChatUser user1Body = user1.getBody();
+        Assert.assertEquals(USER_ID1, user1Body.getId());
+        Assert.assertEquals(USER_NAME1, user1Body.getName());
+        Assert.assertEquals(NICKNAME1, user1Body.getNickName());
+        Assert.assertEquals(PASSWORD1, user1Body.getPassword());
 
-        AppMessage message = argumentCaptor.getValue();
-        Assert.assertNull("should be null", message.getId());
-        Assert.assertNull("should be null", message.getName());
-        Assert.assertEquals(ADD_USER_TYPE, message.getType());
+        IChatUserDTO userCreatedTDO = userRepoCaptor.getValue();
+        Assert.assertNull("user id should be null", userCreatedTDO.getId());
+        Assert.assertEquals(USER_NAME1, userCreatedTDO.getUserName());
+        Assert.assertEquals(PASSWORD1, userCreatedTDO.getPassword());
+        Assert.assertEquals(NICKNAME1, userCreatedTDO.getNickName());
+
+        IAppMessageDTO messageCreatedValue = messageRepoCaptor.getValue();
+
+        Assert.assertNull("should be null", messageCreatedValue.getUserId());
+        Assert.assertNull("should be null", messageCreatedValue.getUserName());
+        Assert.assertEquals(NICKNAME1, messageCreatedValue.getNickName());
+
+        Assert.assertNull("message id should be null", messageCreatedValue.getId());
+        Assert.assertEquals(NEW_USER_TYPE, messageCreatedValue.getType().toString());
+        Assert.assertEquals(NICKNAME1, messageCreatedValue.getNickName());
+
+        AppMessage message = messageCaptor.getValue();
+        Assert.assertEquals(MESSAGE_ID_1, message.getId());
+        Assert.assertNull("should be null", message.getUserName());
+        Assert.assertNull("should be null", message.getUserId());
+        Assert.assertEquals(ADD_USER_TYPE, message.getType().toString());
         Assert.assertEquals(NICKNAME1, message.getNickName());
-        Assert.assertTrue(message.getMsgContext().toString().contains("add new user"));
+        Assert.assertTrue(message.getMsgContext().toString().contains(MESSAGE_CONTEXT_NEW_USER));
+
     }
 
     @Test
-    public void loginNewUser_PublishNewUserIncludeId_Success(){
+    public void loginNewUser_PublishNewUserPublishUserWithID_Success(){
 
         ReflectionTestUtils.setField(buildAppMessageService, "MASK_ID_NAME", false);
 
         restControllerApp.login(user);
 
-        ArgumentCaptor<AppMessage> argumentCaptor = ArgumentCaptor.forClass(AppMessage.class);
+        ArgumentCaptor<AppMessage> messageCaptor = ArgumentCaptor.forClass(AppMessage.class);
+        ArgumentCaptor<IChatUserDTO> userRepoCaptor = ArgumentCaptor.forClass(IChatUserDTO.class);
+        ArgumentCaptor<IAppMessageDTO> messageRepoCaptor = ArgumentCaptor.forClass(IAppMessageDTO.class);
 
-        verify(publishMessageMock, times(1)).publish(argumentCaptor.capture());
+        verify(publishMessageMock, times(1)).publish(messageCaptor.capture());
+        verify(userRepositoryMock, times(1)).insert(userRepoCaptor.capture());
+        verify(messageRepositoryMock, times(1)).insert(messageRepoCaptor.capture());
 
-        AppMessage message = argumentCaptor.getValue();
-        Assert.assertTrue(message.getId().contains(PREF+USER_NAME1));
-        Assert.assertEquals(USER_NAME1, message.getName());
-        Assert.assertEquals(ADD_USER_TYPE, message.getType());
-        Assert.assertEquals(NICKNAME1, message.getNickName());
-        Assert.assertTrue(message.getMsgContext().toString().contains("add new user"));
+        IAppMessageDTO messageCreatedValue = messageRepoCaptor.getValue();
+
+        Assert.assertEquals(USER_ID1, messageCreatedValue.getUserId());
+        Assert.assertEquals(USER_NAME1, messageCreatedValue.getUserName());
+        Assert.assertEquals(NICKNAME1, messageCreatedValue.getNickName());
+
+        Assert.assertNull("message id should be null", messageCreatedValue.getId());
+        Assert.assertEquals(NEW_USER_TYPE, messageCreatedValue.getType().toString());
+        Assert.assertEquals(NICKNAME1, messageCreatedValue.getNickName());
     }
 
     @Test
     public void loginNewUser_noNickName_Success(){
 
         user.setNickName(null);
+        userDTO.setNickName(userDTO.getUserName());
+
         ResponseEntity<ChatUser> user1 = restControllerApp.login(user);
 
-        verify(publishMessageMock, times(1)).publish(any());
+        verify(publishMessageMock, times(1)).publish(messageCaptor.capture());
+        verify(userRepositoryMock, times(1)).insert(userRepoCaptor.capture());
+        verify(messageRepositoryMock, times(1)).insert(messageRepoCaptor.capture());
 
-        Assert.assertTrue("should contain "+PREF+USER_NAME1, user1.getBody().getId().contains(PREF+USER_NAME1));
-        Assert.assertEquals(USER_NAME1, user1.getBody().getName());
-        Assert.assertEquals(USER_NAME1, user1.getBody().getNickName());
-        Assert.assertEquals(PASSWORD1, user1.getBody().getPassword());
+        IChatUserDTO userCreatedTDO = userRepoCaptor.getValue();
+        Assert.assertNull("user id should be null", userCreatedTDO.getId());
+        Assert.assertEquals(USER_NAME1, userCreatedTDO.getUserName());
+        Assert.assertEquals(PASSWORD1, userCreatedTDO.getPassword());
+        Assert.assertEquals(USER_NAME1, userCreatedTDO.getNickName());
+
+        IAppMessageDTO messageCreatedValue = messageRepoCaptor.getValue();
+
+        Assert.assertNull("should be null", messageCreatedValue.getUserId());
+        Assert.assertNull("should be null", messageCreatedValue.getUserName());
+        Assert.assertEquals(USER_NAME1, messageCreatedValue.getNickName());
+
+        Assert.assertNull("message id should be null", messageCreatedValue.getId());
+        Assert.assertEquals(NEW_USER_TYPE, messageCreatedValue.getType().toString());
+        Assert.assertEquals(USER_NAME1, messageCreatedValue.getNickName());
+
+        AppMessage message = messageCaptor.getValue();
+        Assert.assertEquals(MESSAGE_ID_1, message.getId());
+        Assert.assertNull("should be null", message.getUserName());
+        Assert.assertNull("should be null", message.getUserId());
+        Assert.assertEquals(ADD_USER_TYPE, message.getType().toString());
+        Assert.assertEquals(NICKNAME1, message.getNickName());
+        Assert.assertTrue(message.getMsgContext().toString().contains(MESSAGE_CONTEXT_NEW_USER));
     }
 
     @Test
     public void loginExistUser_fail() {
 
+        when(userRepositoryMock.getById(any())).thenReturn(userDTO);
+
         try {
-            restControllerApp.login(user);
             restControllerApp.login(user);
             Assert.fail();
         }catch (BadRequestException ex){

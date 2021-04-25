@@ -5,7 +5,7 @@ import com.sherut.models.DTO.interfaces.IChatUserDTO;
 
 import java.util.List;
 
-public interface IMapChatUserToChatUserDM {
+public interface IMapChatUser {
 
     IChatUserDTO map(ChatUser chatUser);
     ChatUser map(IChatUserDTO chatUserDM);

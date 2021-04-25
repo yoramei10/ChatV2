@@ -4,5 +4,5 @@ import com.sherut.models.ResourceDM.AppMessage;
 
 public interface IPublishMessageApplicationService {
 
-    public void publish (String userId, AppMessage appMessage);
+    public void publish (String userId, Object messageContext);
 }

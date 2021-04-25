@@ -1,9 +1,9 @@
 package com.sherut.messaging.config;
 
 import com.sherut.messaging.implementations.ListenerMessageService;
-import com.sherut.messaging.implementations.PublishMessageService;
+import com.sherut.messaging.implementations.PublishMessageGWService;
 import com.sherut.messaging.interfaces.IListenerMessageService;
-import com.sherut.messaging.interfaces.IPublishMessageService;
+import com.sherut.messaging.interfaces.IPublishMessageGWService;
 import com.sherut.models.ResourceDM.AppMessage;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -38,8 +38,8 @@ public class KafkaConfig {
     private String groupID;
 
     @Bean
-    public IPublishMessageService publishMessage(){
-        return new PublishMessageService();
+    public IPublishMessageGWService publishMessage(){
+        return new PublishMessageGWService();
     }
 
     @Bean

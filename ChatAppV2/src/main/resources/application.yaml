@@ -22,4 +22,7 @@ configuration:
   admin:
     user: ADMIN
 
+  mongoDB:
+    clearDBInSetup: true
+
 

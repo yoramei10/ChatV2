@@ -1,15 +1,18 @@
 package com.sherut.mappers.implementation;
 
 import com.sherut.mappers.interfaces.IMapAppMessage;
+import com.sherut.models.DTO.implementations.AppMessageDTO;
 import com.sherut.models.ResourceDM.AppMessage;
 import com.sherut.models.DTO.interfaces.IAppMessageDTO;
-import com.sherut.models.DTO.interfaces.IFactoryDTO;
+import com.sherut.models.DTO.interfaces.IFactoryDM;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MapAppMessage implements IMapAppMessage {
 
     @Autowired
-    private IFactoryDTO factoryDM;
+    private IFactoryDM factoryDM;
 
     @Override
     public IAppMessageDTO map(AppMessage appMessage) {
@@ -17,25 +20,33 @@ public class MapAppMessage implements IMapAppMessage {
         if (null == appMessage)
             return null;
 
-        IAppMessageDTO appMessageDM = factoryDM.getAppMessageDTO();
-        appMessageDM.setId(appMessageDM.getId());
-        appMessageDM.setName(appMessageDM.getName());
-        appMessageDM.setMsgContext(appMessageDM.getMsgContext());
+        IAppMessageDTO appMessageDTO = new AppMessageDTO();
+        appMessageDTO.setUserId(appMessageDTO.getUserId());
+        appMessageDTO.setUserName(appMessageDTO.getUserName());
+        appMessageDTO.setNickName(appMessageDTO.getNickName());
 
-        return appMessageDM;
+        appMessageDTO.setId(appMessageDTO.getId());
+        appMessageDTO.setType(appMessageDTO.getType());
+        appMessageDTO.setMsgContext(appMessageDTO.getMsgContext());
+
+        return appMessageDTO;
 
     }
 
     @Override
-    public AppMessage map(IAppMessageDTO appMessageDM) {
+    public AppMessage map(IAppMessageDTO appMessageDTO) {
 
-        if (null == appMessageDM)
+        if (null == appMessageDTO)
             return null;
 
         AppMessage appMessage = new AppMessage();
-        appMessage.setId(appMessageDM.getId());
-        appMessage.setNickName(appMessageDM.getName());
-        appMessage.setMsgContext(appMessageDM.getMsgContext());
+        appMessage.setUserId(appMessageDTO.getUserId());
+        appMessage.setNickName(appMessageDTO.getUserName());
+        appMessage.setNickName(appMessageDTO.getNickName());
+
+        appMessage.setId(appMessageDTO.getId());
+        appMessage.setType(appMessageDTO.getType());
+        appMessage.setMsgContext(appMessageDTO.getMsgContext());
 
         return appMessage;
     }

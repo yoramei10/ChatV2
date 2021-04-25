@@ -1,6 +1,7 @@
 package com.sherut.services.domainServices.implementations;
 
 
+import com.sherut.models.DTO.interfaces.IChatUserDTO;
 import com.sherut.models.ResourceDM.ChatUser;
 import com.sherut.services.domainServices.interfaces.IIsUniqueService;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,10 @@ import java.util.List;
 @Service("IsUniqueNickName")
 public class IsUniqueNickNameService implements IIsUniqueService {
 
-    public boolean isUnique(List<ChatUser> allUsers, String nickName) {
+    public boolean isUnique(List<IChatUserDTO> allUsers, String nickName) {
+
+        if (null == allUsers || allUsers.isEmpty())
+            return true;
 
         if(StringUtils.hasText(nickName)) {
             return !allUsers
