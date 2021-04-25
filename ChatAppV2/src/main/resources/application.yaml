@@ -11,6 +11,12 @@ spring:
       groupId: group_id
       keyDeserializer: 'org.apache.kafka.common.serialization.StringDeserializer'
       valueDeserializer: 'org.springframework.kafka.support.serializer.JsonDeserializer'
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: ChatAppDB
+
 appMessage:
   messageContext:
     addNewUser: "add new user "
